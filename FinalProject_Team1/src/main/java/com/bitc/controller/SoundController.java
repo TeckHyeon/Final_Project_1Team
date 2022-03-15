@@ -31,11 +31,11 @@ public class SoundController {
 
 		return mv;
 	}
-	
+
 	@RequestMapping("test.do")
 	public ModelAndView crazyList() throws Exception {
 		ModelAndView mv = new ModelAndView("/sound/test");
-		
+
 		int userPk = 1;
 		List<SoundDto> playList = soundService.selectUserPlaylist(userPk);
 		mv.addObject("playList", playList);
@@ -49,8 +49,10 @@ public class SoundController {
 		ModelAndView mv = new ModelAndView("/sound/userprofile");
 
 		SoundDto sound = soundService.userProfile(userPk);
+		List<SoundDto> upload = soundService.selectUserUpload(userPk);
 		List<SoundDto> playList = soundService.selectUserPlaylist(userPk);
 		mv.addObject("sound", sound);
+		mv.addObject("upload", upload);
 		mv.addObject("playList", playList);
 
 		return mv;

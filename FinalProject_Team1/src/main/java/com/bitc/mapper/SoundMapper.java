@@ -14,5 +14,7 @@ public interface SoundMapper {
 	public SoundDto userProfile(int userPk) throws Exception;
 	
 	public List<SoundDto> selectUserPlaylist(int userPk) throws Exception;
+	
+	public List<SoundDto> selectUserUpload(int userPk) throws Exception;
 
 }

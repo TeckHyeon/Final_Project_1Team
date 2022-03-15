@@ -12,4 +12,6 @@ public interface SoundService {
 	
 	List<SoundDto> selectUserPlaylist(int userPk) throws Exception;
 	
+	List<SoundDto> selectUserUpload(int userPk) throws Exception;
+	
 }

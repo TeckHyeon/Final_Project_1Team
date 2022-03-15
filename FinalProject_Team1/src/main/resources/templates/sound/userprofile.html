@@ -38,7 +38,46 @@
 			<div class="tab-content">
 				<div class="tab-pane fade in active" id="tracks">
 					<br>
-					<p>사용자 업로드 트랙</p>
+					<h3>사용자 업로드 트랙</h3>
+					<br>
+					<div class="row">
+						<div class="col-sm">
+							<table class="table table-hover table-striped">
+								<colgroup>
+									<col width="10%" />
+									<col width="70%" />
+									<col width="20%" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th>순번</th>
+										<th>제목</th>
+										<th>좋아요 수</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${#lists.size(upload)} > 0"
+										th:each="composition : ${upload}">
+										<td><a class="text-decoration-none text-body"
+											href="profile.do?userPk="
+											th:attrappend="href=${composition.userPk}"
+											th:text="${composition.musicPk}">순번</a></td>
+										<td><a class="text-decoration-none text-body"
+											href="profile.do?userPk="
+											th:attrappend="href=${composition.userPk}"
+											th:text="${composition.musicTitle}">제목</a></td>
+										<td><a class="text-decoration-none text-body"
+											href="profile.do?userPk="
+											th:attrappend="href=${composition.userPk}"
+											th:text="${composition.likeCount}">좋아요</a></td>
+									</tr>
+									<tr th:unless="${#lists.size(upload)} > 0 ">
+										<td colspan="3">리스트가 없습니다</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 				<div class="tab-pane fade" id="playlists">
 					<br>

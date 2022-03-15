@@ -29,6 +29,22 @@
 				user_pk = #{user_pk}
 		]]>
 	</select>
+	
+	<select id="selectUserUpload"
+		resultType="com.bitc.dto.SoundDto">
+		<![CDATA[
+			SELECT
+				music_pk, music_category_pk, user_pk, music_title, like_count
+			FROM
+				music
+			WHERE
+				user_pk = #{user_pk}
+			AND
+				privacy = 'Y'
+			ORDER BY
+				music_pk DESC
+		]]>
+	</select>
 
 	<select id="selectUserPlaylist"
 		resultType="com.bitc.dto.SoundDto">

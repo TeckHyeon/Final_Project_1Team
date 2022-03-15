@@ -15,5 +15,10 @@ public class SoundDto {
 	private int userPlaylistPk;
 	private String userPlaylistName;
 	private String playlist;
+	private int musicPk;
+	private int musicCategoryPk;
+	private String musicTitle;
+	private String likeCount;
+	private char privacy;
 
 }
