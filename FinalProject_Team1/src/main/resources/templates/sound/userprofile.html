@@ -72,7 +72,7 @@
 											th:text="${composition.likeCount}">좋아요</a></td>
 									</tr>
 									<tr th:unless="${#lists.size(upload)} > 0 ">
-										<td colspan="3">리스트가 없습니다</td>
+										<td colspan="3">업로드한 음원이 없습니다!</td>
 									</tr>
 								</tbody>
 							</table>
@@ -109,7 +109,7 @@
 											th:text="${sound.userPlaylistName}">010-1234-5678</a></td>
 									</tr>
 									<tr th:unless="${#lists.size(playList)} > 0">
-										<td colspan="2">리스트가 없습니다</td>
+										<td colspan="2">리스트가 없습니다!</td>
 									</tr>
 								</tbody>
 							</table>
