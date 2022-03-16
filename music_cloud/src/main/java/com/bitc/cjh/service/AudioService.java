@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public interface AudioService {
 	
 	//DB 관련 추상 메서드(abstract 생략 가능)
-	void insertBoard(MultipartHttpServletRequest multiFiles) throws Exception;
+	void insertAudio(MultipartHttpServletRequest multiFiles) throws Exception;
 
 	//FileDto selectBoardFileInfo(@Param("fileIdx") int fileIdx, @Param("idx") int idx) throws Exception;
 }

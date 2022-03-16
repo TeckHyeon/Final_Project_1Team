@@ -14,6 +14,6 @@ public class FileDto {
 	private String originalThumbName;
 	private String storedThumbPath;
 	private String fileSize;
-	private String upload_id;
-	private String created_dt;
+	private String uploadId;
+	private String createdDt;
 }

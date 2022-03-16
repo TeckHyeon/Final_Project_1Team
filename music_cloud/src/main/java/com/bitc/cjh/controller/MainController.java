@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bitc.cjh.common.FileUtils;
+import com.bitc.cjh.service.AudioService;
 
 
 //@Controller 어노테이션을 사용하면 클라이언트에게 데이터를 전송시 View Model을 함께 전송
@@ -24,8 +24,7 @@ import com.bitc.cjh.common.FileUtils;
 public class MainController {
 	
 	@Autowired
-	private FileUtils fileUtils;
-
+	private AudioService audioService;
 
 	@RequestMapping(value="/")
 	public ModelAndView openIndex() throws Exception{
@@ -37,7 +36,7 @@ public class MainController {
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public Map<String, Object> insertProductRegistration(MultipartHttpServletRequest multiFiles) throws Exception {		
 		
-		fileUtils.parseFileInfo(multiFiles);
+		audioService.insertAudio(multiFiles);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("SUCCESS", true);
