@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.musiccloud.mapper.MusicCloudMapper">
+
+	<insert id="signinUser" parameterType="com.team1.musiccloud.dto.MusicCloudUserDto">
+		<![CDATA[
+			INSERT INTO users
+				(user_email, user_pw, user_name, user_phone)
+			VALUES
+				(#{userEmail}, #{userPw}, #{userName},  #{userPhone})
+		]]>
+	</insert>
+		<select id="selectMemberInfoYn" parameterType="map" resultType="int">
+		<![CDATA[ 
+			SELECT 
+				COUNT(*) AS cnt
+			FROM
+				users
+			WHERE
+				user_email = #{userEmail}
+			AND
+				user_pw = #{userPw}
+		]]>
+	</select > 
+</mapper>
