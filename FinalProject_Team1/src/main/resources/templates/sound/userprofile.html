@@ -18,14 +18,23 @@
 </head>
 <body>
 	<header>
-		<div class="card m-3">
-			<img src="img/img_avatar1.png" class="card-img-bottom">
-			<div class="card-body">
-				<h4 class="card-title" th:text="${sound.userName}">이름</h4>
-				<p class="card-text" th:text="${sound.userEmail}">이메일</p>
-				<a href="profilelist.do" class="btn btn-primary">사용자 목록</a>
+		<div class="container mt-5 px-1">
+			<div class="p-5 bg-dark bg-opacity-50 rounded">
+				<div class="row">
+					<div class="col-2">
+						<img
+							src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"
+							class="img-thumbnail" width="120" height="120" />
+					</div>
+					<div class="col-2">
+						<h4 class="card-title" th:text="${sound.userName}">이름</h4>
+						<p class="card-text" th:text="${sound.userEmail}">이메일</p>
+						<a href="profilelist.do" class="btn btn-primary">관심등록</a>
+					</div>
+				</div>
 			</div>
 		</div>
+		<br>
 	</header>
 	<br>
 	<main class="container">
