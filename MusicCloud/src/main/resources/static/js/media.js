@@ -1,4 +1,4 @@
-duration = document.querySelector("#duration");
+	duration = document.querySelector("#duration");
 current = document.querySelector("#current");
 playPause = document.querySelector("#playPause");
 volumeSlider = document.querySelector("#volumeSlider");
@@ -20,12 +20,15 @@ wavesurfer = WaveSurfer.create({
     container: "#wave",
     waveColor: "#cdedff",
     progressColor: "#1AAFFF",
-    height: 100,
-    fillParent: false,
-    minPxPerSec: 3.2,
+    height: 70,
+    fillParent: true,
     maxCanvasWidth: 10,
     scrollParent: false,
-    responsive: true
+    responsive: true,
+    barWidth: 2,
+    barHeight: 1,
+    barGap: null,
+      
 });
 
 //load audio file
@@ -41,11 +44,11 @@ const toggleMute = () => {
   wavesurfer.toggleMute()
   const isMuted = wavesurfer.getMute()
   if (isMuted) {
-    volumeIcon.src = "image/volume-mute.png"
+    volumeIcon.src = "image/volume_mute_black.png"
     volumeSlider.disabled = true
   } else {
     volumeSlider.disabled = false
-    volumeIcon.src = "image/volume.png"
+    volumeIcon.src = "image/volume_black.png"
   }
 }
 const handleVolumeChange = e => {

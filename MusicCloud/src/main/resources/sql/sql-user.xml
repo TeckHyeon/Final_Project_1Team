@@ -11,7 +11,7 @@
 				(#{userEmail}, #{userPw}, #{userName},  #{userPhone})
 		]]>
 	</insert>
-		<select id="selectMemberInfoYn" parameterType="map" resultType="int">
+	<select id="selectMemberInfoYn" parameterType="map" resultType="int">
 		<![CDATA[ 
 			SELECT 
 				COUNT(*) AS cnt
@@ -22,5 +22,27 @@
 			AND
 				user_pw = #{userPw}
 		]]>
-	</select > 
+	</select>
+	<select id="searchMusic" parameterType="String" resultType="com.team1.musiccloud.dto.MusicCloudMusicDto">
+		<![CDATA[ 
+			SELECT
+				music_pk, music_category_pk, user_pk, music_title, music_desc, like_count, privacy, created_dt
+			FROM
+				music
+			WHERE
+				music_title like CONCAT('%',#{keyword},'%')
+			AND
+				privacy = 'Y'
+		]]>
+	</select>
+	<select id="userInfoByPk" parameterType="int" resultType="com.team1.musiccloud.dto.MusicCloudUserDto">
+		<![CDATA[ 
+	SELECT
+		*
+	FROM
+		users
+	WHERE
+		user_pk = #{userPk}
+	]]>
+	</select>
 </mapper>

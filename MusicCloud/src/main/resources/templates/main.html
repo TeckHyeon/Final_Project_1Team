@@ -92,7 +92,7 @@ a {
 	<main>
 		<div class="row">
 			<div class="col-2"></div>
-			<div class="col-8 mx-auto container" style="background-color: white; height: auto; width: 50%" id="container">
+			<div class="col-8 mx-auto container" style="background-color: white; height: auto;" id="container">
 				<div th:if="${session.userEmail == null}"></div>
 				<div th:unless="${session.userEmail == null}" class="container-fluid">
 					<h5 class="mt-5 mb-3">최근 재생목록</h5>
@@ -353,7 +353,6 @@ a {
 			<script type="text/javascript" src="/js/main.js"></script>
 			<div class="col-2"></div>
 		</div>
-
 	</main>
 	<footer th:include="layout/footer :: footer"></footer>
 </body>
