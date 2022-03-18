@@ -1,10 +1,10 @@
-package com.team1.musiccloud.mapper;
+package com.bitc.cjh.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.team1.musiccloud.dto.FileDto;
+import com.bitc.cjh.dto.FileDto;
 
 
 //mybatis와 연결되어 있는 interface 라는 것을 의미하는 어노테이션

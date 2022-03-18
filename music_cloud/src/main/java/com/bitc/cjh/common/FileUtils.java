@@ -1,4 +1,4 @@
-package com.team1.musiccloud.common;
+package com.bitc.cjh.common;
 
 import java.io.File;
 import java.time.ZonedDateTime;
@@ -12,7 +12,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.team1.musiccloud.dto.FileDto;
+import com.bitc.cjh.dto.FileDto;
 
 
 

@@ -1,4 +1,4 @@
-package com.team1.musiccloud.configuration;
+package com.bitc.cjh.configuration;
 
 import javax.sql.DataSource;
 
@@ -39,7 +39,7 @@ public class DatabaseConfiguration {
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
-		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/sql/**/sql-*.xml"));
+		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/**/sql-*.xml"));
 		sqlSessionFactoryBean.setConfiguration(mybatisConfig());
 		
 		return sqlSessionFactoryBean.getObject();

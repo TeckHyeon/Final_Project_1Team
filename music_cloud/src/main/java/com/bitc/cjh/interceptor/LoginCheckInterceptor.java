@@ -1,4 +1,4 @@
-package com.team1.musiccloud.interceptor;
+package com.bitc.cjh.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

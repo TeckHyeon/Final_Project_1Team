@@ -1,4 +1,4 @@
-package com.team1.musiccloud.dto;
+package com.bitc.cjh.dto;
 
 import lombok.Data;
 

@@ -1,12 +1,12 @@
-package com.team1.musiccloud.mapper;
+package com.bitc.cjh.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.team1.musiccloud.dto.MusicCloudMusicDto;
-import com.team1.musiccloud.dto.MusicCloudUserDto;
+import com.bitc.cjh.dto.MusicCloudMusicDto;
+import com.bitc.cjh.dto.MusicCloudUserDto;
 
 @Mapper
 public interface MusicCloudMapper {

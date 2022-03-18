@@ -1,4 +1,4 @@
-package com.team1.musiccloud.controller;
+package com.bitc.cjh.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.team1.musiccloud.dto.MusicCloudMusicDto;
-import com.team1.musiccloud.dto.MusicCloudUserDto;
-import com.team1.musiccloud.service.MusicCloudService;
+import com.bitc.cjh.dto.MusicCloudMusicDto;
+import com.bitc.cjh.dto.MusicCloudUserDto;
+import com.bitc.cjh.service.MusicCloudService;
 
 @Controller
 public class MusicCloudController {

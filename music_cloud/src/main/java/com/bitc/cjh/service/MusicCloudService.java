@@ -1,9 +1,9 @@
-package com.team1.musiccloud.service;
+package com.bitc.cjh.service;
 
 import java.util.List;
 
-import com.team1.musiccloud.dto.MusicCloudMusicDto;
-import com.team1.musiccloud.dto.MusicCloudUserDto;
+import com.bitc.cjh.dto.MusicCloudMusicDto;
+import com.bitc.cjh.dto.MusicCloudUserDto;
 
 public interface MusicCloudService {
 

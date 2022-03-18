@@ -1,4 +1,4 @@
-package com.team1.musiccloud.controller;
+package com.bitc.cjh.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.team1.musiccloud.service.AudioService;
+import com.bitc.cjh.service.AudioService;
 
 
 //@Controller 어노테이션을 사용하면 클라이언트에게 데이터를 전송시 View Model을 함께 전송

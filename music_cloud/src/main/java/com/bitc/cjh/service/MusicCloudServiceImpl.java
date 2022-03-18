@@ -1,13 +1,13 @@
-package com.team1.musiccloud.service;
+package com.bitc.cjh.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.team1.musiccloud.dto.MusicCloudMusicDto;
-import com.team1.musiccloud.dto.MusicCloudUserDto;
-import com.team1.musiccloud.mapper.MusicCloudMapper;
+import com.bitc.cjh.dto.MusicCloudMusicDto;
+import com.bitc.cjh.dto.MusicCloudUserDto;
+import com.bitc.cjh.mapper.MusicCloudMapper;
 
 @Service
 public class MusicCloudServiceImpl implements MusicCloudService {

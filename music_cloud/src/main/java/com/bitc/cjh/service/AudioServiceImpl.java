@@ -1,4 +1,4 @@
-package com.team1.musiccloud.service;
+package com.bitc.cjh.service;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.team1.musiccloud.common.FileUtils;
-import com.team1.musiccloud.dto.FileDto;
-import com.team1.musiccloud.mapper.AudioMapper;
+import com.bitc.cjh.common.FileUtils;
+import com.bitc.cjh.dto.FileDto;
+import com.bitc.cjh.mapper.AudioMapper;
 
 
 //내부에서 자바 로직을 처리하는 어노테이션
