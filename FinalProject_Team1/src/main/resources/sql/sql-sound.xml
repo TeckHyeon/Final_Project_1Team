@@ -29,9 +29,8 @@
 				user_pk = #{user_pk}
 		]]>
 	</select>
-	
-	<select id="selectUserUpload"
-		resultType="com.bitc.dto.SoundDto">
+
+	<select id="selectUserUpload" resultType="com.bitc.dto.SoundDto">
 		<![CDATA[
 			SELECT
 				music_pk, music_category_pk, user_pk, music_title, like_count

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,15 +33,9 @@ public class SoundController {
 		return mv;
 	}
 
-	@RequestMapping("test.do")
-	public ModelAndView crazyList() throws Exception {
-		ModelAndView mv = new ModelAndView("/sound/test");
-
-		int userPk = 1;
-		List<SoundDto> playList = soundService.selectUserPlaylist(userPk);
-		mv.addObject("playList", playList);
-
-		return mv;
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String crazyList() throws Exception {
+		return "test";
 	}
 
 	@RequestMapping("profile.do")
