@@ -9,7 +9,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-<script src="https://unpkg.com/wavesurfer.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
 .footer {
@@ -81,28 +80,65 @@ a {
 </style>
 <script src="js/main_ajax.js"></script>
 
-<script>
+<!-- <script>
 	$(document).ready(function() {
 		var el = document.getElementById('container');
 		var ch = el.scrollHeight + 300 + "px";
-		var player = document.getElementById('player');
-		var waveform = document.getElementById('wave');
 		var thumb = document.getElementById('thumb');
-		var width = player.clientWidth - thumb.clientWidth + 10 + "px";
-		console.log(width);
-		waveform.style.width = width;
-		console.log(ch);
-		el.style.height = ch;
+		var nods = document.getElementById('listsSize');
+		for (var i = 1; i < nods.value; i++) {
+			var player = document.getElementById('player' + i);
+			el.style.height = ch;
+			var waveform = document.getElementById('wave' + i);
+			var width = player.clientWidth - thumb.clientWidth + 10 + "px";
+			waveform.style.width = width;
+			console.log(waveform.style.width);
+
+		}
+
 	});
 	window.onresize = function(event) {
-		var player = document.getElementById('player');
-		var waveform = document.getElementById('wave');
-		var thumb = document.getElementById('thumb');
-		var width = player.clientWidth - thumb.clientWidth + "px";
-		console.log(width);
-		waveform.style.width = width;
+		for (var i = 1; i < nods.value; i++) {
+			var player = document.getElementById('player' + i);
+			var waveform = document.getElementById('wave');
+			var thumb = document.getElementById('thumb');
+			var width = player.clientWidth - thumb.clientWidth + "px";
+			/* 	console.log(width); */
+			waveform.style.width = width;
+		}
+
 	}
+</script> -->
+<script>
+	
 </script>
+
+
+<!-- <script>
+	$(document).ready(function() {
+		var listsSize = $("#listsSize").val();
+		var nods = 3;
+		for (var i = 1; i < nods; i++) {
+
+			var duration = document.querySelector("#duration" + i);
+			var current = document.getElementById('current' + i);
+			var playbtn = document.getElementById('playbtn' + i);
+			var volumeSlider = document.getElementById('volumeSlider' + i);
+			var volumeIcon = document.getElementById('volumeIcon' + i);
+			var player = document.getElementById('player' + i);
+			var waveform = document.getElementById('wave' + i);
+
+			console.log(duration);
+			console.log(current);
+			console.log(playbtn);
+			console.log(volumeSlider);
+			console.log(player);
+			console.log(waveform);
+
+		}
+	});
+</script> -->
+
 </head>
 <body style="background-color: #F2F2F2;">
 	<header th:include="layout/header :: header"></header>
@@ -113,10 +149,11 @@ a {
 				<div class="d-flex flex-column">
 					<div class="mt-3 mx-3">
 						<h3>
-							Search results for <span th:text="${keyword}"></span>
+							Search results for "<span th:text="${keyword}"></span>"
 						</h3>
 						<hr>
 					</div>
+					<input type="hidden" id="listsSize" th:value="${#lists.size(search)}" name="listsSize">
 					<div class="mt-3 mx-3">
 						<h5 th:if="${#lists.size(search)} > 0">
 							Found <span><span th:text="${#lists.size(search)}"></span> tracks</span>
@@ -125,7 +162,7 @@ a {
 					</div>
 					<div th:if="${#lists.size(search)} > 0" th:each="item : ${search}">
 						<!-- <input type="hidden" th:value="${item.userPk}" name="userPk"> -->
-	
+
 						<div class="player my-4 d-flex flex-row" id="player">
 							<img class="thumb ms-3 col-2" src="image/sunshine blvd - Ocean Blue.jpg" id="thumb" style="width: 9rem; height: 9rem;" />
 							<div class="info ms-3 col-10" style="margin-left: -1rem;">
@@ -133,7 +170,7 @@ a {
 									<div class="">
 										<div class="d-flex">
 											<div class="control" style="width: 2.5rem; height: 2.5rem;">
-												<img class="fi-rr-play" id="playPause" src="image/play.png" style="width: 2.5rem; height: 2.5rem;">
+												<img class="fi-rr-play" id="playbtn" src="image/play.png" style="width: 2.5rem; height: 2.5rem;" th:attrappend="id=${item.musicPk}">
 											</div>
 											<div class="title ms-1">
 												<div th:each="user : ${users}">
@@ -142,14 +179,16 @@ a {
 												<span class="row fs-5 fw-light ms-1" style="margin-top: -0.3em;" th:text="${item.musicTitle}"></span>
 											</div>
 										</div>
-										<div id="wave" class="ms-1 d-flex flex-column-reverse" style="width: auto;">
+										<div id="wave" class="ms-1 d-flex flex-column-reverse wave" style="width: auto;" th:attrappend="id=${item.musicPk}">
 											<div class="time d-flex justify-content-between col-10 mt-2" id="timeline" style="margin-top: -0.3rem;">
 												<div class="mt-1">
-													<span id="current" style="color: #f89b00;">0:00</span> / <span id="duration">0:00</span>
+													<span id="current" style="color: #f89b00;" th:attrappend="id=${item.musicPk}">0:00</span> / <span id="duration" th:attrappend="id=${item.musicPk}">0:00</span>
 												</div>
 												<div class="volume">
-													<img id="volumeIcon" class="volume-icon" src="image/volume_black.png" alt="Volume" style="width: 1.5rem; height: 1.5rem;" /> <input
-														id="volumeSlider" class="volume-slider mx-2" type="range" name="volume-slider" min="0" max="100" value="50"
+													<img id="volumeIcon" class="volume-icon" src="image/volume_black.png" alt="Volume" style="width: 1.5rem; height: 1.5rem;"
+														th:attrappend="id=${item.musicPk}"
+													/> <input id="volumeSlider" class="volume-slider mx-2" type="range" name="volume-slider" min="0" max="100" value="50"
+														th:attrappend="id=${item.musicPk}"
 													/>
 												</div>
 											</div>
@@ -188,7 +227,7 @@ a {
 							</div>
 						</div>
 					</div>
-
+					<input type="text" id="src1" value="song/sunshine blvd - Ocean Blue.wav" name="src" class="src">
 					<div th:unless="${#lists.size(search)} > 0">
 						<div class="player my-4 d-flex flex-row" id="player">
 							<img class="thumb ms-3 col-2" src="image/sunshine blvd - Ocean Blue.jpg" id="thumb" style="width: 9rem; height: 9rem;" />
@@ -197,7 +236,7 @@ a {
 									<div class="">
 										<div class="d-flex">
 											<div class="control" style="width: 2.5rem; height: 2.5rem;">
-												<img class="fi-rr-play" id="playPause" src="image/play.png" style="width: 2.5rem; height: 2.5rem;">
+												<img class="fi-rr-play" id="playbtn" src="image/play.png" style="width: 2.5rem; height: 2.5rem;">
 											</div>
 											<div class="title ms-1">
 												<span class="row text-muted fw-light ms-1 mt-1" style="font-size: 13px">작성자</span> <span class="row fs-5 fw-light ms-1" style="margin-top: -0.3em;">sunshine
@@ -259,7 +298,100 @@ a {
 
 
 	</main>
-	<script src="/js/media.js"></script>
 	<footer th:include="layout/footer :: footer"></footer>
 </body>
+<script src="https://unpkg.com/wavesurfer.js@4.2.0/dist/wavesurfer.js"></script>
+<script>
+	$(document).ready(function() {
+		var playbtn = $(this).find('.fi-rr-play');
+		$('.player').each(function() {
+
+			var wave = $(this).find('.wave').attr('id');
+
+			var src = $("#src1").val();
+
+			var wavesurfer = WaveSurfer.create({
+				container : '#' + wave,
+				progressColor : '#a4aa00',
+				waveColor : '#9a9a9a',
+				cursorColor : '#a4aa00',
+				responsive : 'true'
+			});
+			$(this).data('wavesurfer', wavesurfer)
+			wavesurfer.load(src);
+
+			wavesurfer.on('ready', function() {
+				wavesurfer.play();
+			});
+
+			$(playbtn).on('click', function() {
+				wavesurfer.playPause();
+			});
+		});
+
+	});
+</script>
+
+
+<!-- <script src="/js/media.js"></script>
+<!-- <script>
+	$(document).ready(function() {
+		var nods = 3;
+		for (var i = 1; i < nods; i++) {
+			var wave = [];
+			wave[i] = document.getElementById('wave' + i);
+			var playbtn = [];
+			playbtn[i] = document.getElementById('playbtn' + i);
+			console.log(playbtn[i]);
+			var wavesurfer = [];
+			wavesurfer[i] = WaveSurfer.create({
+				container : wave[i],
+				waveColor : "#cdedff",
+				progressColor : "#1AAFFF",
+				height : 70,
+				fillParent : true,
+				maxCanvasWidth : 10,
+				scrollParent : false,
+				responsive : true,
+				barWidth : 2,
+				barHeight : 1,
+				barGap : null,
+			});
+			wavesurfer[i].load("song/sunshine blvd - Ocean Blue.wav");
+			$(document).on('click', playbtn[i], function() {
+				wavesurfer[i].playPause();
+			});
+		}
+	});
+</script>
+<!-- <script>
+	$(document).ready(function() {
+
+		var wave = document.getElementById('wave1');
+
+		var wavesurfer = WaveSurfer.create({
+			container : wave,
+			waveColor : "#cdedff",
+			progressColor : "#1AAFFF",
+			height : 70,
+			fillParent : true,
+			maxCanvasWidth : 10,
+			scrollParent : false,
+			responsive : true,
+			barWidth : 2,
+			barHeight : 1,
+			barGap : null,
+		});
+		wavesurfer.load("song/sunshine blvd - Ocean Blue.wav");
+		nods = 3;
+		for (var i = 1; i < nods; i++) {
+			var playbtn = [];
+			playbtn[i] = document.getElementById('playbtn' + i);
+			console.log(playbtn[i]);
+			$(document).on('click', playbtn[i], function() {
+				wavesurfer.playPause();
+			});
+		}
+	});
+</script> -->
 </html>

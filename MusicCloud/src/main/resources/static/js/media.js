@@ -1,4 +1,4 @@
-	duration = document.querySelector("#duration");
+duration = document.querySelector("#duration");
 current = document.querySelector("#current");
 playPause = document.querySelector("#playPause");
 volumeSlider = document.querySelector("#volumeSlider");
