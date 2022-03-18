@@ -138,6 +138,7 @@ public class MainController {
 			HttpSession session = request.getSession();
 			session.setAttribute("userEmail", user.getUserEmail());
 			session.setAttribute("userName", user.getUserName());
+			session.setAttribute("userPk", user.getUserPk());
 			session.setMaxInactiveInterval(1800);
 
 		} else {
@@ -199,7 +200,7 @@ public class MainController {
 		return mv;
 	}
 
-	@RequestMapping("/profile")
+	@RequestMapping("/profile{userPk}")
 	public ModelAndView userProfile(@RequestParam("userPk") int userPk) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/member/userprofile");
@@ -297,6 +298,7 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("/login/myPage");
 		
 		List<MusicReplyDto> replyData = mcService.reply(userPk); 
+		mv.addObject("replyData", replyData);
 		return mv;
 	}
 	

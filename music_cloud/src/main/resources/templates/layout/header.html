@@ -1,221 +1,143 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Insert title here</title>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 <style>
 a:focus {
-box-shadow: none;
+	box-shadow: none;
 	outline: none;
-
 }
+
 a:active {
-box-shadow: none;
+	box-shadow: none;
 	outline: none;
-
 }
+
 a:hover {
-box-shadow: none;
+	box-shadow: none;
 	outline: none;
-
 }
+
 .soksung {
-color: #ffffff;
-background: #3379FE;
-font-size: 1.2em;
-padding: 0.3em 0.5em;
-margin-right: 0.1em;
+	color: #ffffff;
+	background: #3379FE;
+	font-size: 1.2em;
+	padding: 0.3em 0.5em;
+	margin-right: 0.1em;
 }
-
 </style>
-    </head>
-    <body>
-        <header>
-            <nav
-                class="navbar navbar-expand-lg navbar-dark text-white"
-                style="background-color: #333333;">
-                <div class="container">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark text-white" style="background-color: #333333;">
+			<div class="container">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                        <ul
-                            th:if="${session.userEmail == null}"
-                            class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item mx-3">
-                                <a
-                                    class="nav-link active btn btn-sm text-white my-auto"
-                                    aria-current="page"
-                                    href="/main"
-                                    style="border-color: rgba(255, 255, 255, 0.25); width: 5em;">Home</a>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <a
-                                    class="nav-link btn btn-sm text-white my-auto"
-                                    data-bs-toggle="modal"
-                                    href="#openpopup"
-                                    role="button"
-                                    style="border-color: rgba(255, 255, 255, 0.25); width: 7em;">재생목록</a>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <div class="input-group nav-item" style="width: 35rem;">
-                                    <input
-                                        class="form-control"
-                                        type="search"
-                                        placeholder="Search"
-                                        aria-label="Search"
-                                        style="background-color: #E5E5E5;">
-                                    <span class="input-group-text" style="background-color: #E5E5E5">
-                                        <input type="image" name="button" src="image/search.png">
-                                    </span>
-                                </div>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <a
-                                    class="nav-link btn btn-sm text-white"
-                                    data-bs-toggle="modal"
-                                    href="#openpopup"
-                                    role="button"
-                                    style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">업로드</a>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <a 
-                                    class="nav-link btn btn-sm text-white"
-                                    data-bs-toggle="modal"
-                                    href="#openpopup"
-                                    role="button"
-                                    style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">로그인</a>
-                                <div class="modal fade" id="openpopup" aria-hidden="true" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content" style="height: 513px; width: 413px">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title text-dark">Log in</h5>
-                                                <button
-                                                    type="button"
-                                                    class="btn-close"
-                                                    data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <th:block th:replace="~{/member/login :: setLogin(~{this::login} )}"></th:block>
-                                            <a
-                                                class="btn mx-auto mb-5"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#openpopup2"
-                                                style="background-color: #F5F7F9; width: 20em; border: 0.5px solid; border-color: rgba(0, 0, 0, 0.25);">회원가입</a>
-                                            <div style="display: none;" id="invalidId">
-                                                <p class="text-danger text-center fw-bold">이메일과 비밀번호를 확인해주세요</p>
-                                            </div>
-                                        </div>
-                                    </div>
+					<ul th:if="${session.userEmail == null}" class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item mx-3"><a class="nav-link active btn btn-sm text-white my-auto" aria-current="page" href="/main"
+							style="border-color: rgba(255, 255, 255, 0.25); width: 5em;"
+						>Home</a></li>
+						<li class="nav-item mx-3"><a class="nav-link btn btn-sm text-white my-auto" data-bs-toggle="modal" href="#openpopup" role="button"
+							style="border-color: rgba(255, 255, 255, 0.25); width: 7em;"
+						>재생목록</a></li>
+						<li class="nav-item mx-3">
 
-                                </div>
-                                <div class="modal fade" id="openpopup2" aria-hidden="true" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title text-dark">Sign in</h5>
-                                                <button
-                                                    type="button"
-                                                    class="btn-close"
-                                                    data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <th:block th:replace="~{/member/signin :: setSignin(~{this::signin} )}"></th:block>
-                                            <a
-                                                class="btn mx-auto mb-5"
-                                                data-bs-target="#openpopup"
-                                                data-bs-toggle="modal"
-                                                style="background-color: #F5F7F9; width: 20em; border: 0.5px solid; border-color: rgba(0, 0, 0, 0.25);">취소</a>
+							<div class="input-group nav-item" >
+								<form action="/search" style="width: 35rem;">
+									<input id="keyword" name="keyword" class="form-control" type="search" placeholder="Search" aria-label="Search" style="background-color: #E5E5E5;">
+								</form>
+								<span class="input-group-text" style="background-color: #E5E5E5"> <input type="image" name="button" src="image/search.png">
+								</span>
+							</div>
+						</li>
+						<li class="nav-item mx-3"><a class="nav-link btn btn-sm text-white" data-bs-toggle="modal" href="#openpopup" role="button"
+							style="border-color: rgba(255, 255, 255, 0.25); width: 6em;"
+						>업로드</a></li>
+						<li class="nav-item mx-3"><a class="nav-link btn btn-sm text-white" data-bs-toggle="modal" href="#openpopup" role="button"
+							style="border-color: rgba(255, 255, 255, 0.25); width: 6em;"
+						>로그인</a>
+							<div class="modal fade" id="openpopup" aria-hidden="true" tabindex="-1">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content" style="height: 513px; width: 413px">
+										<div class="modal-header">
+											<h5 class="modal-title text-dark">Log in</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<th:block th:replace="~{/login :: setLogin(~{this::login} )}"></th:block>
+										<a class="btn mx-auto mb-5" data-bs-toggle="modal" data-bs-target="#openpopup2"
+											style="background-color: #F5F7F9; width: 20em; border: 0.5px solid; border-color: rgba(0, 0, 0, 0.25);"
+										>회원가입</a>
+										<div style="display: none;" id="invalidId">
+											<p class="text-danger text-center fw-bold">이메일과 비밀번호를 확인해주세요</p>
+										</div>
+									</div>
+								</div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item mx-3 my-auto">
-                                <a
-                                    class="nav-link text-white btn btn-sm"
-                                    data-bs-toggle="modal"
-                                    role="button"
-                                    href="#openpopup2"
-                                    style="background-color: #FF5500; border: none; width: 8em;">회원가입</a>
-                            </li>
+							</div>
+							<div class="modal fade" id="openpopup2" aria-hidden="true" tabindex="-1">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title text-dark">Sign in</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<th:block th:replace="~{/signin :: setSignin(~{this::signin} )}"></th:block>
+										<a class="btn mx-auto mb-5" data-bs-target="#openpopup" data-bs-toggle="modal"
+											style="background-color: #F5F7F9; width: 20em; border: 0.5px solid; border-color: rgba(0, 0, 0, 0.25);"
+										>취소</a>
 
-                        </ul>
-                        <ul
-                            class="navbar-nav me-auto mb-2 mb-lg-0"
-                            th:unless="${session.userEmail == null}">
-                            <li class="nav-item mx-3">
-                                <a class="nav-link active btn btn-sm text-white my-auto" aria-current="page" href="/main" style="border-color: rgba(255, 255, 255, 0.25); width: 5em;">Home</a>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <a class="nav-link btn btn-sm text-white my-auto" aria-current="page" href="#" style="border-color: rgba(255, 255, 255, 0.25); width: 7em;">재생목록</a>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <div class="input-group nav-item" style="width: 35rem;">
-                                    <input
-                                        class="form-control"
-                                        type="search"
-                                        placeholder="Search"
-                                        aria-label="Search"
-                                        style="background-color: #E5E5E5;">
-                                    <span class="input-group-text" style="background-color: #E5E5E5">
-                                        <input type="image" name="button" src="image/search.png">
-                                    </span>
-                                </div>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <a class="nav-link btn btn-sm text-white my-auto" href="#"  style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">업로드</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a
-                                    class="nav-link d-flex align-items-center dropdown-toggle btn btn-sm text-white my-auto"
-                                    href="#"
-                                    id="navbarDropdown"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false" style="border-color: rgba(255, 255, 255, 0.25); width: 8em;"><input
-                                    class="me-2 rounded-circle"
-                                    type="image"
-                                    src="image/profile.jpg"
-                                    style="width: 24px; height: 24px;">
-                                    프로필
-                                </a>
-                                <ul class=" dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li>
-                                        <a class="d-flex align-items-center dropdown-item" href="#" >
-                                            <span><input
-                                                class="me-2"
-                                                type="image"
-                                                src="image/user.png"
-                                                style="width: 15px; height: 15px;"></span>마이페이지
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <span><input
-                                                class="me-2"
-                                                type="image"
-                                                src="image/like.png"
-                                                style="width: 15px; height: 15px;"></span>좋아요
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <span><input
-                                                class="me-2"
-                                                type="image"
-                                                src="image/playlist.png"
-                                                style="width: 15px; height: 15px;"></span>플레이리스트
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <a class="nav-link btn btn-sm text-white" href="/logout" role="button" style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">로그아웃</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+									</div>
+								</div>
+							</div></li>
+						<li class="nav-item mx-3 my-auto"><a class="nav-link text-white btn btn-sm" data-bs-toggle="modal" role="button" href="#openpopup2"
+							style="background-color: #FF5500; border: none; width: 8em;"
+						>회원가입</a></li>
 
-        </header>
-    </body>
+					</ul>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0" th:unless="${session.userEmail == null}">
+						<li class="nav-item mx-3"><a class="nav-link active btn btn-sm text-white my-auto" aria-current="page" href="/main"
+							style="border-color: rgba(255, 255, 255, 0.25); width: 5em;"
+						>Home</a></li>
+						<li class="nav-item mx-3"><a class="nav-link btn btn-sm text-white my-auto" aria-current="page" href="#"
+							style="border-color: rgba(255, 255, 255, 0.25); width: 7em;"
+						>재생목록</a></li>
+						<li class="nav-item mx-3">
+							<div class="input-group nav-item" >
+								<form action="/search" style="width: 35rem;">
+									<input id="keyword" name="keyword" class="form-control" type="search" placeholder="Search" aria-label="Search" style="background-color: #E5E5E5;">
+								</form>
+								<span class="input-group-text" style="background-color: #E5E5E5"> <input type="image" name="button" src="image/search.png">
+								</span>
+							</div>
+						</li>
+						<li class="nav-item mx-3"><a class="nav-link btn btn-sm text-white my-auto" href="#" style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">업로드</a>
+						</li>
+						<li class="nav-item dropdown"><a class="nav-link d-flex align-items-center dropdown-toggle btn btn-sm text-white my-auto" href="#" id="navbarDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: rgba(255, 255, 255, 0.25); width: 8em;"
+						><input class="me-2 rounded-circle" type="image" src="image/profile.jpg" style="width: 24px; height: 24px;"> 프로필 </a>
+							<ul class=" dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="d-flex align-items-center dropdown-item" href="#"> <span><input class="me-2" type="image" src="image/user.png"
+											style="width: 15px; height: 15px;"
+										></span>마이페이지
+								</a></li>
+								<li><a class="d-flex align-items-center dropdown-item" href="#"> <span><input class="me-2" type="image" src="image/like.png"
+											style="width: 15px; height: 15px;"
+										></span>좋아요
+								</a></li>
+								<li><a class="d-flex align-items-center dropdown-item" href="#"> <span><input class="me-2" type="image" src="image/playlist.png"
+											style="width: 15px; height: 15px;"
+										></span>플레이리스트
+								</a></li>
+							</ul></li>
+						<li class="nav-item mx-3"><a class="nav-link btn btn-sm text-white" href="/logout" role="button"
+							style="border-color: rgba(255, 255, 255, 0.25); width: 6em;"
+						>로그아웃</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+	</header>
+</body>
 </html>

@@ -17,9 +17,9 @@
 	</select>
 	
 	<!-- 배진국 -->
-	<select id="reply" parameterType="int" resultType="com.bitc.cjh.dto.MusicReplyDto">
+<!--	<select id="reply" parameterType="int" resultType="com.bitc.cjh.dto.MusicReplyDto">
 
-	</select>
+	</select>-->
 	
 	
 	<!-- 회원 프로필 및 플레이리스트(류주형) -->
@@ -69,7 +69,7 @@
 			SELECT
 				user_pk, user_playlist_pk, user_playlist_name, playlist
 			FROM
-				userplaylist
+				user_playlist
 			WHERE
 				user_pk = #{user_pk}
 			ORDER BY

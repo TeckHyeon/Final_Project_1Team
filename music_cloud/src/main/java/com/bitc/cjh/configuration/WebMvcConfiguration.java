@@ -21,7 +21,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 				.excludePathPatterns("/header")
 				.excludePathPatterns("/css/**", "/js/**", "/image/**", "/song/**", "/node_modules/**")
 				.excludePathPatterns("/detail").excludePathPatterns("/upload").excludePathPatterns("/search")
-				.excludePathPatterns("/index");
+				.excludePathPatterns("/index").excludePathPatterns("/profilelist");
 	}
 	
 	
