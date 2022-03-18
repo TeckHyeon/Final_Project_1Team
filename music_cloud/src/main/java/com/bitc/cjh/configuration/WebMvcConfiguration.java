@@ -3,11 +3,26 @@ package com.bitc.cjh.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.bitc.cjh.inerceptor.LoginCheckInterceptor;
+
+
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoginCheckInterceptor()).addPathPatterns("/**").excludePathPatterns("/loginFail")
+				.excludePathPatterns("/login").excludePathPatterns("/loginCheck").excludePathPatterns("/")
+				.excludePathPatterns("/signin").excludePathPatterns("/emailCheck").excludePathPatterns("/main")
+				.excludePathPatterns("/header")
+				.excludePathPatterns("/css/**", "/js/**", "/image/**", "/song/**", "/node_modules/**")
+				.excludePathPatterns("/detail").excludePathPatterns("/upload").excludePathPatterns("/search")
+				.excludePathPatterns("/index");
+	}
 	
 	
 	@Bean
