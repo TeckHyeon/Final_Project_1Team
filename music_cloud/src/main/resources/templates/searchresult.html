@@ -80,14 +80,14 @@ a {
 </style>
 <script src="js/main_ajax.js"></script>
 
-<!-- <script>
+<script>
 	$(document).ready(function() {
 		var el = document.getElementById('container');
 		var ch = el.scrollHeight + 300 + "px";
 		var thumb = document.getElementById('thumb');
-		var nods = document.getElementById('listsSize');
-		for (var i = 1; i < nods.value; i++) {
-			var player = document.getElementById('player' + i);
+		const listsSize = $("#listsSize").val();
+		for (let i = 1; i <= listsSize; i++) {
+			var player = document.getElementById('player');
 			el.style.height = ch;
 			var waveform = document.getElementById('wave' + i);
 			var width = player.clientWidth - thumb.clientWidth + 10 + "px";
@@ -98,9 +98,10 @@ a {
 
 	});
 	window.onresize = function(event) {
-		for (var i = 1; i < nods.value; i++) {
-			var player = document.getElementById('player' + i);
-			var waveform = document.getElementById('wave');
+		const listsSize = $("#listsSize").val();
+		for (let i = 1; i <= listsSize; i++) {
+			var player = document.getElementById('player');
+			var waveform = document.getElementById('wave' + i);
 			var thumb = document.getElementById('thumb');
 			var width = player.clientWidth - thumb.clientWidth + "px";
 			/* 	console.log(width); */
@@ -108,37 +109,7 @@ a {
 		}
 
 	}
-</script> -->
-<script>
-	
 </script>
-
-
-<!-- <script>
-	$(document).ready(function() {
-		var listsSize = $("#listsSize").val();
-		var nods = 3;
-		for (var i = 1; i < nods; i++) {
-
-			var duration = document.querySelector("#duration" + i);
-			var current = document.getElementById('current' + i);
-			var playbtn = document.getElementById('playbtn' + i);
-			var volumeSlider = document.getElementById('volumeSlider' + i);
-			var volumeIcon = document.getElementById('volumeIcon' + i);
-			var player = document.getElementById('player' + i);
-			var waveform = document.getElementById('wave' + i);
-
-			console.log(duration);
-			console.log(current);
-			console.log(playbtn);
-			console.log(volumeSlider);
-			console.log(player);
-			console.log(waveform);
-
-		}
-	});
-</script> -->
-
 </head>
 <body style="background-color: #F2F2F2;">
 	<header th:include="layout/header :: header"></header>
@@ -227,7 +198,7 @@ a {
 							</div>
 						</div>
 					</div>
-					<input type="text" id="src1" value="song/sunshine blvd - Ocean Blue.wav" name="src" class="src">
+					<input type="hidden" id="src1" value="song/sunshine blvd - Ocean Blue.wav" name="src" class="src">
 					<div th:unless="${#lists.size(search)} > 0">
 						<div class="player my-4 d-flex flex-row" id="player">
 							<img class="thumb ms-3 col-2" src="image/sunshine blvd - Ocean Blue.jpg" id="thumb" style="width: 9rem; height: 9rem;" />

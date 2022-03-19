@@ -3,21 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-<script src="https://unpkg.com/wavesurfer.js"></script>
+
+<!-- hls.js plugin -->
+
 
 <script>
 	$(document)
 			.ready(
 					function() {
+
 						$('#content')
 								.each(
 										function() {
+
 											var content = $(this).children(
 													'#contents');
 											var el = document
@@ -25,6 +33,7 @@
 											var contents = $("#contents").val();
 											var contents_text = $("#contents")
 													.val().split(/\r\n|\r|\n/);
+
 											var contents_short = contents_text[0]
 													+ '\n'
 													+ contents_text[1]
@@ -32,20 +41,25 @@
 													+ contents_text[2]
 													+ '\n'
 													+ contents_text[3]
-													+ " ..."
+													+ " ...";
+
 											var btn_more = $('<a href="javascript:void(0)" class="more" style="color: black; text-decoration: none;">더보기</a>');
+
 											$(this).append(btn_more);
+
 											if (contents_text.length >= 4) {
 												content.html(contents_short)
 											} else {
 												btn_more.hide()
 											}
+
 											btn_more.click(toggle_content);
+
 											function toggle_content() {
 												if ($(this).hasClass('short')) {
 													$(this).html('더보기');
 													content
-															.html(contents_short)
+															.html(contents_short);
 													$(this)
 															.removeClass(
 																	'short');
@@ -68,42 +82,6 @@
 </script>
 
 <style>
-.swiper-container {
-	margin: 0 auto;
-	position: relative;
-	overflow: hidden;
-	list-style: none;
-	padding: 0;
-	z-index: 1;
-}
-
-.swiper-container2 {
-	margin: 0 auto;
-	position: relative;
-	overflow: hidden;
-	list-style: none;
-	padding: 0;
-	z-index: 1;
-}
-
-.swiper-slide {
-	text-align: center;
-	display: flex;
-	/* 내용을 중앙정렬 하기위해 flex 사용 */
-	align-items: center;
-	/* 위아래 기준 중앙정렬 */
-	justify-content: center;
-	/* 좌우 기준 중앙정렬 */
-}
-
-.swiper-button-next, .swiper-button-prev {
-	opacity: 1;
-}
-
-.swiper-button-next::after, .swiper-button-prev::after {
-	display: none;
-}
-
 .footer {
 	background-color: grey;
 }
@@ -143,8 +121,10 @@
 	<header th:include="layout/header :: header"></header>
 	<main style="margin-bottom: 10rem;">
 		<div class="container">
-			<div class="player row my-4" id="player"
-				style="background: #536976; background: -webkit-linear-gradient(to right, #292E49, #536976); background: linear-gradient(to right, #292E49, #536976);">
+			<div class="row my-4"
+				style="background: #536976; background: -webkit-linear-gradient(to right, #292E49, #536976); background: linear-gradient(to right, #292E49, #536976);"
+			>
+
 				<div class="info col-9">
 					<div class="detail">
 						<div class="my-3 d-flex flex-row">
@@ -158,9 +138,13 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="row">
+							<audio id="audio" hidden></audio>
 							<div id="wave" class="my-4"></div>
 						</div>
+
+						<!-- Volume Control -->
 						<div class="row">
 							<div class="volume">
 								<img id="volumeIcon" class="volume-icon" src="image/volume.png" alt="Volume" style="width: 2rem; height: 2rem;" /> <input id="volumeSlider"
@@ -182,6 +166,8 @@
 					<button type="submit" class="btn float-end bg-transparent text-primary" style="margin-top: -38px; border: none;">게시</button>
 				</form>
 			</div>
+
+
 			<div class="box row">
 				<div class="col-2">
 					<div>
@@ -191,44 +177,52 @@
 					</div>
 
 				</div>
+
 				<div class="col-10">
 					<div class="row" id="content">
-						<textarea cols="100%" id="contents" style="height: 130px; border: none;">[Verse 1]
-I don't usually cry at all
-But wow, is it always close
-Ranging from a movie scene
-To made up people in my dreams
-The last time, if I recall
-Was a feeling of being alone
-I don't know if
-Where I'm going isn't far, but
-
-[Chorus]
-In case I go
-No need to be stressed. Got a ticket home
-Cause damn. I really miss the shade of blue
-Just take it slow
-I'll wait to find love
-Better hear the call again
-For now, I will feel the ocean view
-And I pray that it won't be over soon
-
-[Verse 2]
-Oh my, I miss the sun
-Just wait it won't be too long
-Till' we arrive the coming day
-Please ignore my restless face
-Cause it's too hard to keep it all together
-Ever since we left
-I guess it just makes sense
-To what the reasoning was
-When I said</textarea>
+						<textarea cols="100%" id="contents" style="height: 130px; border: none;">
+							[Verse 1]
+							I don't usually cry at all
+							But wow, is it always close
+							Ranging from a movie scene
+							To made up people in my dreams
+							The last time, if I recall
+							Was a feeling of being alone
+							I don't know if
+							Where I'm going isn't far, but
+							
+							[Chorus]
+							In case I go
+							No need to be stressed. Got a ticket home
+							Cause damn. I really miss the shade of blue
+							Just take it slow
+							I'll wait to find love
+							Better hear the call again
+							For now, I will feel the ocean view
+							And I pray that it won't be over soon
+							
+							[Verse 2]
+							Oh my, I miss the sun
+							Just wait it won't be too long
+							Till' we arrive the coming day
+							Please ignore my restless face
+							Cause it's too hard to keep it all together
+							Ever since we left
+							I guess it just makes sense
+							To what the reasoning was
+							When I said
+						</textarea>
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
+
+	<script src="/node_modules/hls.js/dist/hls.min.js"></script>
+	<script src="https://unpkg.com/wavesurfer.js"></script>
 	<script src="/js/media.js"></script>
+
+
 	<footer th:include="layout/footer :: footer"></footer>
 </body>
 </html>

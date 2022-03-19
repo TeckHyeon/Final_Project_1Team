@@ -14,8 +14,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.bitc.cjh.dto.FileDto;
 
-
-
 //@Component : 스프링프레임워크가 자동으로 등록하여 객체를 실행할 자바 클래스(임의 작성), @Bean과 동일한 기능 but 사용자가 필요에 따라서 작성해 추가하는 라이브러리
 //@Bean : 스프링프레임워크에에 사전 등록되어 있는 라이브러리. 
 @Component 

@@ -82,10 +82,12 @@ a {
 	$(document).ready(function() {
 		var el = document.getElementById('container');
 		var ch = el.scrollHeight + 300 + "px";
-		console.log(ch);
 		el.style.height = ch;
 	});
 </script>
+
+<script src="js/login.js"></script>
+
 </head>
 <body style="background-color: #F2F2F2;">
 	<header th:include="layout/header :: header"></header>
@@ -93,14 +95,17 @@ a {
 		<div class="row">
 			<div class="col-2"></div>
 			<div class="col-8 mx-auto container" style="background-color: white; height: auto;" id="container">
+
 				<div th:if="${session.userEmail == null}"></div>
 				<div th:unless="${session.userEmail == null}" class="container-fluid">
 					<h5 class="mt-5 mb-3">최근 재생목록</h5>
 					<div class="my-3 d-sm-flex flex-row"
-						style="width: 100%; background: #536976; background: -webkit-linear-gradient(to right, #292E49, #536976); background: linear-gradient(to right, #292E49, #536976);">
+						style="width: 100%; background: #536976; background: -webkit-linear-gradient(to right, #292E49, #536976); background: linear-gradient(to right, #292E49, #536976);"
+					>
 
 						<img class="col-xxl-3 d-none d-sm-flex align-items-center mx-auto my-auto" src="image/album.jpg"
-							style="width: 200px; height: 200px; margin: auto; display: block;">
+							style="width: 200px; height: 200px; margin: auto; display: block;"
+						>
 
 
 						<div class="col-xxl-9" style="overflow-y: auto; overflow-x: hidden;">
@@ -141,7 +146,35 @@ a {
 					</div>
 				</div>
 
-				<div class="mt-5 mb-3">
+				<div class="mt-5 mb-3" th:if="${#lists.size(music)} > 0">
+					<h5 class="mb-3">추천 음악</h5>
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" th:each="item : ${music}">
+								<div class="card border-white ms-3" style="width: 15rem;">
+									<img src="image/album.jpg" class="card-img-top">
+									<div class="card-body">
+										<div>
+											<span class="row card-title fs-6" th:text="${item.musicTitle}" style="margin-top: -0.5rem;">노래 제목</span>
+										</div>
+
+										<div th:each="user : ${users}">
+											<span class="row text-muted fw-light" style="font-size: 13px; margin-top: -0.5rem;" th:text="${user.userName}">작성자</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-button-next">
+							<img src="image/next.png" width="50em" height="50em" style="margin-right: 3rem;">
+						</div>
+						<div class="swiper-button-prev">
+							<img src="image/back.png" width="50em" height="50em" style="margin-left: 3rem">
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-5 mb-3" th:unless="${#lists.size(music)} > 0">
 					<h5 class="mb-3">추천 음악</h5>
 					<div class="swiper-container">
 						<div class="swiper-wrapper">
@@ -245,6 +278,7 @@ a {
 						</div>
 					</div>
 				</div>
+
 				<div class="my-3">
 					<h5>카테고리별 추천 음악</h5>
 					<div class="swiper-container2 my-3">

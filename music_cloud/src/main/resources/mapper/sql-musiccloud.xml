@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.cjh.mapper.MusicCloudMapper">
+
+	<select id="searchMusic" parameterType="String" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[ 
+			SELECT
+				music_pk, music_category_pk, user_pk, music_title, music_desc, like_count, privacy, created_dt
+			FROM
+				music
+			WHERE
+				music_title like CONCAT('%',#{keyword},'%')
+			AND
+				privacy = 'Y'
+		]]>
+	</select>
+
+	<select id="importMusicInfo" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[
+			SELECT
+				music_pk, music_category_pk, user_pk, music_title, music_desc, like_count, privacy, created_dt
+			FROM
+				music
+			WHERE
+				privacy = 'Y'
+		]]>
+	</select>
+
+	<!-- 배진국 -->
+	<select id="reply" parameterType="int" resultType="com.bitc.cjh.dto.MusicReplyDto"></select>
+
+
+	<!-- 회원 프로필 및 플레이리스트(류주형) -->
+	<select id="selectUserProfile" resultType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_email, user_pw, user_name,
+				user_phone, like_list
+			FROM
+				users
+			WHERE
+				admin_yn = 'N'
+			ORDER BY
+				user_pk DESC
+		]]>
+	</select>
+
+	<select id="userProfile" parameterType="int" resultType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_email, user_pw, user_name,
+				user_phone, like_list
+			FROM
+				users
+			WHERE
+				user_pk = #{user_pk}
+		]]>
+	</select>
+
+	<select id="selectUserUpload" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[
+			SELECT
+				music_pk, music_category_pk, user_pk, music_title, like_count
+			FROM
+				music
+			WHERE
+				user_pk = #{user_pk}
+			AND
+				privacy = 'Y'
+			ORDER BY
+				music_pk DESC
+		]]>
+	</select>
+
+	<select id="selectUserPlaylist" resultType="com.bitc.cjh.dto.UserPlaylistDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_playlist_pk, user_playlist_name, playlist
+			FROM
+				userplaylist
+			WHERE
+				user_pk = #{user_pk}
+			ORDER BY
+				user_playlist_pk DESC
+		]]>
+	</select>
+
+</mapper>

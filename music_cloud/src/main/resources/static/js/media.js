@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var nods = 3;
+	const listsSize = $("#listsSize").val();
 	const wavesurfer = {};
 	const playbtn = {};
 	const duration = {};
@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 		return minute + ":" + second;
 	};
-	for (let i = 1; i < nods; i++) {
+	for (let i = 1; i <= listsSize; i++) {
 		duration[i] = document.getElementById('duration' + i);
 		current[i] = document.getElementById('current' + i);
 		volumeSlider[i] = document.getElementById('volumeSlider' + i);
