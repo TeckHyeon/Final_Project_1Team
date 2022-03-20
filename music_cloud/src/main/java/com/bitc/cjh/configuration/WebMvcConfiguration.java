@@ -19,7 +19,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 				.excludePathPatterns("/login").excludePathPatterns("/loginCheck").excludePathPatterns("/")
 				.excludePathPatterns("/signin").excludePathPatterns("/emailCheck").excludePathPatterns("/main")
 				.excludePathPatterns("/header")
-				.excludePathPatterns("/css/**", "/js/**", "/image/**", "/song/**", "/node_modules/**")
+				.excludePathPatterns("/css/**", "/js/**", "/image/**", "/audio/**", "/node_modules/**")
 				.excludePathPatterns("/detail").excludePathPatterns("/upload").excludePathPatterns("/search")
 				.excludePathPatterns("/index");
 	}
@@ -40,6 +40,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/upload/**")
+		.addResourceLocations("file:///c:/workspace-spring-tool-suite-4-4.12.1.RELEASE/music_cloud/audio/");
+		
 		registry.addResourceHandler("/audio/**")
 		.addResourceLocations("file:///c:/workspace-spring-tool-suite-4-4.12.1.RELEASE/music_cloud/audio/");
 	}

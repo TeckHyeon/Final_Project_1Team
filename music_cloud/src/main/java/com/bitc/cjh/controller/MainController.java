@@ -1,18 +1,28 @@
 package com.bitc.cjh.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +38,8 @@ import com.bitc.cjh.service.IOService;
 import com.bitc.cjh.service.MemberService;
 import com.bitc.cjh.service.MusicCloudService;
 
+import reactor.core.publisher.Mono;
+
 
 //@Controller 어노테이션을 사용하면 클라이언트에게 데이터를 전송시 View Model을 함께 전송
 //@ResponseBody 어노테이션을 사용하면 클라이언트에게 데이터만 전송함
@@ -39,6 +51,9 @@ import com.bitc.cjh.service.MusicCloudService;
 @Controller
 public class MainController {
 	
+	public static final String AUDIO_PATH = "C:\\Users\\CJH\\git\\Final_Project_1Team\\music_cloud\\audio";
+	public static final int BYTE_RANGE = 128;
+		
 	@Autowired
 	private IOService ioService;
 	
@@ -331,11 +346,115 @@ public class MainController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/audio/1")
-	public String musicSrc() throws Exception{
+	@RequestMapping(value="/audio/{fileName}", method=RequestMethod.GET)
+	public Mono<ResponseEntity<byte[]>> streamAudio(
+			@RequestHeader(value = "Range", required = false) String httpRangeList,
+            @PathVariable("fileName") String fileName) {
 		
-		return "C:/Users/CJH/git/Final_Project_1Team/music_cloud/audio/20220317/438724586989200.flac";
+		return Mono.just(getContent(AUDIO_PATH, fileName, httpRangeList, "audio"));
 	}
+	
+	
+	private ResponseEntity<byte[]> getContent(String location, String fileName, String range, String contentTypePrefix) {
+		
+		long rangeStart = 0;
+		long rangeEnd;
+		byte[] data;
+		Long fileSize;
+		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
+		
+		System.out.println(System.getProperty("user.dir"));
+		
+		try {
+			fileSize = Optional.ofNullable(fileName)
+					  .map(file -> Paths.get(location, file))
+					  .map(this :: sizeFromFile)
+					  .orElse(0L);
+			if (range == null) {
+				return ResponseEntity.status(HttpStatus.OK)
+					  .header("Content-Type", contentTypePrefix+"/"+fileType)
+					  .header("Content-Length", String.valueOf(fileSize))
+					  .body(readByteRange(location, fileName, rangeStart, fileSize - 1));
+			}
+			
+			String[] ranges = range.split("-");
+			rangeStart = Long.parseLong(ranges[0].substring(6));
+			
+			if (ranges.length > 1) {
+				rangeEnd = Long.parseLong(ranges[1]);
+			} else {
+				rangeEnd = fileSize - 1;
+			}
+			
+			if (fileSize < rangeEnd) {
+				rangeEnd = fileSize - 1;
+			}
+			
+			data = readByteRange(location, fileName, rangeStart, rangeEnd);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		String contentLength = String.valueOf((rangeEnd - rangeStart) + 1);
+		
+		return ResponseEntity.status(HttpStatus.OK)
+			  .header("Content-Type", contentTypePrefix+"/"+fileType)
+			  .header("Content-Length", contentLength)
+			  .header("Content-Range", "bytes" + " " + rangeStart + "-" + rangeEnd + "/" + fileSize)
+			  .body(data);
+		
+	}
+	
+	public byte[] readByteRange(String location, String fileName, long start, long end) throws IOException {
+		Path path = Paths.get(location, fileName);
+		
+		try (InputStream inputStream = (Files.newInputStream(path));
+			ByteArrayOutputStream bufferedOutputStream = new ByteArrayOutputStream()) {
+			
+				byte[] data = new byte[BYTE_RANGE];
+			    int nRead;
+			    
+			    while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+			       bufferedOutputStream.write(data, 0, nRead);
+			    }
+			    
+			    bufferedOutputStream.flush();
+			    
+			    byte[] result = new byte[(int) (end - start) + 1];
+			    
+			    System.arraycopy(bufferedOutputStream.toByteArray(), (int) start, result, 0, result.length);
+			    
+			    return result;
+			}
+				
+	}
+	
+	
+	/*
+	private String getFilePath(String location) {
+	    URL url = this.getClass().getResource(location);
+	    return new File(url.getFile()).getAbsolutePath();
+	}
+	*/
+	
+	
+	private Long sizeFromFile(Path path) {
+		try {
+		   return Files.size(path);
+		} catch (IOException ex) {
+		   ex.printStackTrace();
+		}
+		return 0L;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/*

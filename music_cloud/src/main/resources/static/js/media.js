@@ -16,42 +16,6 @@ var timeCalculator = function (value) {
 };
 
 var audio = document.getElementById('audio');
-var audioSrc = "/music/1";
-
-if(Hls.isSupported()) {
-
-	var hls = new Hls();
-	hls.loadSource(audioSrc);
-	hls.attachMedia(audio);
-	
-	/*
-	hls.on(Hls.Events.MEDIA_ATTACHED, function() {
-	
-		const wavesurfer = WaveSurfer.create({
-		    container: "#wave",
-		    waveColor: "#cdedff",
-		    progressColor: "#1AAFFF",
-		    height: 100,
-		    fillParent: false,
-		    minPxPerSec: 3.2,
-		    maxCanvasWidth: 10,
-		    scrollParent: false,
-		    responsive: true,
-		    
-		    partialRender: true,
-		    backend:'MediaElement'
-		});
-		
-		//wavesurfer.backend.setPeaks(waveform.data, waveform.length)
-        //wavesurfer.load(audio, waveform.data);
-        
-	});
-	*/
-
-}
-
-
-
 
 /*
 //start wavesurfer object 
