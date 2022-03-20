@@ -18,70 +18,54 @@
 
 
 <script>
-	$(document)
-			.ready(
-					function() {
-
-						$('#content')
-								.each(
-										function() {
-
-											var content = $(this).children(
-													'#contents');
-											var el = document
-													.getElementById('contents');
-											var contents = $("#contents").val();
-											var contents_text = $("#contents")
-													.val().split(/\r\n|\r|\n/);
-
-											var contents_short = contents_text[0]
-													+ '\n'
-													+ contents_text[1]
-													+ '\n'
-													+ contents_text[2]
-													+ '\n'
-													+ contents_text[3]
-													+ " ...";
-
-											var btn_more = $('<a href="javascript:void(0)" class="more" style="color: black; text-decoration: none;">더보기</a>');
-
-											$(this).append(btn_more);
-
-											if (contents_text.length >= 4) {
-												content.html(contents_short)
-											} else {
-												btn_more.hide()
-											}
-
-											btn_more.click(toggle_content);
-
-											function toggle_content() {
-												if ($(this).hasClass('short')) {
-													$(this).html('더보기');
-													content
-															.html(contents_short);
-													$(this)
-															.removeClass(
-																	'short');
-													el.style.height = "130px";
-													console.log(el.scrollHeight
-															+ "px");
-												} else {
-													$(this).html('접기');
-													content.html(contents);
-													$(this).addClass('short');
-													el.style.height = el.scrollHeight
-															+ "px";
-													console.log(el.scrollHeight
-															+ "px");
-												}
-											}
-											console.log(el.scrollHeight + "px");
-										});
-					});
+	$(document).ready(function() {
+		
+		$('#content').each(function() {
+			
+			var content = $(this).children('#contents');
+			var el = document.getElementById('contents');
+			var contents = $("#contents").val();
+			var contents_text = $("#contents").val().split(/\r\n|\r|\n/);
+			
+			var contents_short = contents_text[0]+ '\n'
+								+ contents_text[1] + '\n'
+								+ contents_text[2] + '\n'
+								+ contents_text[3] + " ...";
+			
+			var btn_more = $('<a href="javascript:void(0)" class="more" style="color: black; text-decoration: none;">더보기</a>');
+			
+			$(this).append(btn_more);
+			
+			if (contents_text.length >= 4) {
+				content.html(contents_short);
+			} else {
+				btn_more.hide();
+			}
+			
+			btn_more.click(toggle_content);
+			
+			function toggle_content() {
+				if ($(this).hasClass('short')) {
+					$(this).html('더보기');
+					content.html(contents_short);
+					$(this).removeClass('short');
+					el.style.height = "130px";
+					console.log(el.scrollHeight + "px");
+				} else {
+					$(this).html('접기');
+					content.html(contents);
+					$(this).addClass('short');
+					el.style.height = el.scrollHeight + "px";
+					console.log(el.scrollHeight + "px");
+				}
+			}
+			console.log(el.scrollHeight + "px");
+		});
+	});
 </script>
 
 <style>
+
 .footer {
 	background-color: grey;
 }
@@ -118,66 +102,76 @@
 
 </head>
 <body>
-	<header th:include="layout/header :: header"></header>
+
 	<main style="margin-bottom: 10rem;">
 		<div class="container">
-			<div class="row my-4"
-				style="background: #536976; background: -webkit-linear-gradient(to right, #292E49, #536976); background: linear-gradient(to right, #292E49, #536976);"
-			>
-
+			<div class="row my-4" style="background: #536976;
+										 background: -webkit-linear-gradient(to right, #292E49, #536976);
+										 background: linear-gradient(to right, #292E49, #536976);">
+				
 				<div class="info col-9">
 					<div class="detail">
 						<div class="my-3 d-flex flex-row">
 							<div class="control my-2">
-								<img class="fi-rr-play" id="playPause" src="image/play.png" style="width: 5rem; height: 5rem;">
+								<img class="fi-rr-play" id="playPause" src="image/play.png"
+									style="width: 5rem; height: 5rem;">
 							</div>
 							<div class="title my-3 mx-3" style="color: white;">
 								<span class="fs-3">sunshine blvd. - Ocean Blue</span>
 								<div class="time my-2">
-									<span id="current" style="color: #f89b00;">0:00</span> / <span id="duration">0:00</span>
+									<span id="current" style="color: #f89b00;">0:00</span> / <span
+										id="duration">0:00</span>
 								</div>
 							</div>
 						</div>
-
+						
 						<div class="row">
 							<audio id="audio" hidden></audio>
 							<div id="wave" class="my-4"></div>
 						</div>
-
+						
 						<!-- Volume Control -->
 						<div class="row">
 							<div class="volume">
-								<img id="volumeIcon" class="volume-icon" src="image/volume.png" alt="Volume" style="width: 2rem; height: 2rem;" /> <input id="volumeSlider"
-									class="volume-slider mx-2" type="range" name="volume-slider" min="0" max="100" value="50"
-								/>
+								<img id="volumeIcon" class="volume-icon" src="image/volume.png"
+								alt="Volume" style="width: 2rem; height: 2rem;" />
+								<input id="volumeSlider" class="volume-slider mx-2" type="range"
+								name="volume-slider" min="0" max="100" value="50" />
 							</div>
 						</div>
 					</div>
 
 				</div>
 				<div class="thumb col-3 d-flex justify-content-end my-3">
-					<img src="image/sunshine blvd - Ocean Blue.jpg" style="width: 20rem; height: 20rem;" />
+					<img src="image/sunshine blvd - Ocean Blue.jpg"
+						style="width: 20rem; height: 20rem;" />
 				</div>
 			</div>
 			<div class="row" style="margin-top: -2rem;">
 				<form id="comment">
-					<input type="image" name="button" src="image/profile.jpg" disabled="disabled" style="width: 2.5rem; height: 2.5rem; margin-bottom: -45px; border: none;">
-					<input class="form-control border-top " type="text" placeholder="댓글 달기..." style="height: 2.5rem; padding-left: 3rem">
-					<button type="submit" class="btn float-end bg-transparent text-primary" style="margin-top: -38px; border: none;">게시</button>
+					<input type="image" name="button" src="image/profile.jpg" disabled="disabled"
+						style="width: 2.5rem; height: 2.5rem; margin-bottom: -45px; border: none;">
+					<input class="form-control border-top " type="text"
+						placeholder="댓글 달기..." style="height: 2.5rem; padding-left: 3rem">
+					<button type="submit"
+						class="btn float-end bg-transparent text-primary"
+						style="margin-top: -38px; border: none;">게시</button>
 				</form>
 			</div>
-
-
+			
+			
 			<div class="box row">
 				<div class="col-2">
 					<div>
-						<img class="rounded-circle text-center mx-3" src="image/profile.jpg" style="width: 8rem; height: 8rem; overflow: hidden; display: block;"> <input
-							class="fw-bold my-4 mx-5" type="text" name="creatorId" readonly value="사용자" style="border: none;"
-						>
+						<img class="rounded-circle text-center mx-3"
+							src="image/profile.jpg"
+							style="width: 8rem; height: 8rem; overflow: hidden; display: block;">
+						<input class="fw-bold my-4 mx-5" type="text" name="creatorId"
+							readonly value="사용자" style="border: none;">
 					</div>
 
 				</div>
-
+				
 				<div class="col-10">
 					<div class="row" id="content">
 						<textarea cols="100%" id="contents" style="height: 130px; border: none;">
@@ -217,12 +211,12 @@
 			</div>
 		</div>
 	</main>
-
+	
 	<script src="/node_modules/hls.js/dist/hls.min.js"></script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	<script src="/js/media.js"></script>
-
-
+	
+	
 	<footer th:include="layout/footer :: footer"></footer>
 </body>
 </html>

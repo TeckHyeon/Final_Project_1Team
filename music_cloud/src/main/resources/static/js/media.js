@@ -76,6 +76,7 @@ $(document).ready(function() {
 			wavesurfer[i].setVolume(volumeSlider.value / 100)
 		});
 
+
 		//get updated current time on play
 		wavesurfer[i].on("audioprocess", function(e) {
 			current[i].textContent = timeCalculator(wavesurfer[i].getCurrentTime());
