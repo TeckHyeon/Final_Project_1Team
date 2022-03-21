@@ -41,7 +41,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/audio/**")
-		.addResourceLocations("file:///c:/workspace-spring-tool-suite-4-4.12.1.RELEASE/music_cloud/audio/");
+		.addResourceLocations("file:///c:/users/rims2/Desktop/최종프로젝트/Final_Project_1Team/music_cloud/audio/");
 	}
 	
 

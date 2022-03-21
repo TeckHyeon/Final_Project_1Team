@@ -6,6 +6,7 @@ $(document).ready(function() {
 	const current = {};
 	volumeSlider = {};
 	volumeIcon = {};
+	filePath ={};
 	var timeCalculator = function(value) {
 		second = Math.floor(value % 60);
 		minute = Math.floor((value / 60) % 60);
@@ -23,6 +24,7 @@ $(document).ready(function() {
 		volumeIcon[i] = document.getElementById('volumeIcon' + i);
 		player = document.querySelector("#player");
 		wave = document.getElementById('wave' + i);
+		filePath = $("#filePath" + i).val();
 		wavesurfer[i] = WaveSurfer.create({
 			container: wave,
 			waveColor: "#cdedff",
@@ -36,7 +38,7 @@ $(document).ready(function() {
 			barHeight: 1,
 			barGap: null
 		});
-		wavesurfer[i].load("song/sunshine blvd - Ocean Blue.wav");
+		wavesurfer[i].load(filePath);
 		playbtn[i] = document.getElementById('playbtn' + i);
 
 		$(playbtn[i]).on('click', function() {

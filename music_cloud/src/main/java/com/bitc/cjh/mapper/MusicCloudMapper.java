@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.bitc.cjh.dto.FileDto;
 import com.bitc.cjh.dto.MusicDto;
 import com.bitc.cjh.dto.MusicReplyDto;
 import com.bitc.cjh.dto.UserDto;
@@ -28,5 +29,13 @@ public interface MusicCloudMapper {
 	public List<MusicDto> selectUserUpload(int userPk) throws Exception;
 
 	List<MusicDto> importMusicInfo() throws Exception;
+
+	List<MusicDto> musicInfoByCategory() throws Exception;
+
+	List<FileDto> findFilePath(int musicPk) throws Exception;
+
+	List<UserDto> userInfoByPk(int userPk) throws Exception;
+
+	MusicDto viewDetailPage(int musicPk) throws Exception;
 
 }
