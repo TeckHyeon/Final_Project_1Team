@@ -24,7 +24,7 @@ public class SoundController {
 	}
 
 	@RequestMapping("profilelist.do")
-	public ModelAndView addrList() throws Exception {
+	public ModelAndView profile() throws Exception {
 		ModelAndView mv = new ModelAndView("/sound/userList");
 
 		List<SoundDto> userList = soundService.selectUserProfile();
@@ -33,9 +33,16 @@ public class SoundController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String crazyList() throws Exception {
-		return "test";
+	@RequestMapping(value = "playlist.do", method = RequestMethod.GET)
+	public ModelAndView playList(@RequestParam("userPlaylistPk") int userPlaylistPk) throws Exception {
+		ModelAndView mv = new ModelAndView("/sound/playList");
+		
+		List<SoundDto> userList = soundService.selectUserProfile();
+		List<SoundDto> upload = soundService.selectUserUpload(userPlaylistPk);
+		mv.addObject("userList", userList);
+		mv.addObject("upload", upload);
+
+		return mv;
 	}
 
 	@RequestMapping("profile.do")
