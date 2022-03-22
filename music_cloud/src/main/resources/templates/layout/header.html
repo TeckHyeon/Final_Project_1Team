@@ -142,6 +142,7 @@ margin-right: 0.1em;
                         <ul
                             class="navbar-nav me-auto mb-2 mb-lg-0"
                             th:unless="${session.userEmail == null}">
+                            
                             <li class="nav-item mx-3">
                                 <a class="nav-link active btn btn-sm text-white my-auto" aria-current="page" href="/main" style="border-color: rgba(255, 255, 255, 0.25); width: 5em;">Home</a>
                             </li>
@@ -162,7 +163,7 @@ margin-right: 0.1em;
                                 </div>
                             </li>
                             <li class="nav-item mx-3">
-                                <a class="nav-link btn btn-sm text-white my-auto" href="#"  style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">업로드</a>
+                                <a class="nav-link btn btn-sm text-white my-auto" href="/upload"  style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">업로드</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a

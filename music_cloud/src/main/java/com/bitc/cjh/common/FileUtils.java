@@ -1,11 +1,15 @@
 package com.bitc.cjh.common;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -112,7 +116,8 @@ public class FileUtils {
 					
 					//현재시간을 기준으로 이름을 설정함
 					//1970년 1월 1일 00시 00분 00초 기준으로 현재시간까지 진행된 시간을 1000분의 1로 표현
-					newFileName = Long.toString(System.nanoTime()) + originalFileExtension;
+					String tmpName =  Long.toString(System.nanoTime());
+					newFileName = tmpName + originalFileExtension;
 					
 					FileDto audioFile = new FileDto();
 					//boardFile.setIdx(boardIdx);
@@ -125,12 +130,25 @@ public class FileUtils {
 					//새로 생성된 파일명과 실제 저장할 경로를 합하여 디스크에 저장할 경로 및 파일명 설정
 					audioFile.setStoredFilePath(path + "/" + newFileName);
 					
-					//목록에 저장
-					fileList.add(audioFile);
-					
 					file = new File(path+"/"+newFileName);
 					//현재 파일(메모리에만 존재된 상태)을 지정한 위치로 이동(실제 디스크에 저장)
 					mFile.transferTo(file);
+					
+					audioFile.setTag(new AudioTagger(file));
+					
+					ByteArrayInputStream inputStream = new ByteArrayInputStream(audioFile.getTag().getCover().getBinaryData());
+					
+					BufferedImage bufferedImage = ImageIO.read(inputStream);
+	
+					ImageIO.write(bufferedImage, "jpg", new File(path+"/"+tmpName+".jpg"));
+					
+					audioFile.setStoredThumbPath(path+"/"+tmpName+".jpg");
+					audioFile.getTag().setThumb_tmp_path(path+"/"+tmpName+".jpg");
+					
+					
+					//목록에 저장
+					fileList.add(audioFile);
+
 				}
 			}
 		}		

@@ -1,5 +1,7 @@
 package com.bitc.cjh.dto;
 
+import com.bitc.cjh.common.AudioTagger;
+
 import lombok.Data;
 
 @Data
@@ -16,4 +18,6 @@ public class FileDto {
 	private String fileSize;
 	private String uploadId;
 	private String createdDt;
+	
+	private AudioTagger tag;
 }

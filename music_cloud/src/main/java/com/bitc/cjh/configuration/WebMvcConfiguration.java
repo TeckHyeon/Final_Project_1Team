@@ -15,13 +15,18 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginCheckInterceptor()).addPathPatterns("/**").excludePathPatterns("/loginFail")
+		registry.addInterceptor(
+				
+				new LoginCheckInterceptor()).addPathPatterns("/detail");
+				/*
+				new LoginCheckInterceptor()).addPathPatterns("/**").excludePathPatterns("/loginFail")
 				.excludePathPatterns("/login").excludePathPatterns("/loginCheck").excludePathPatterns("/")
 				.excludePathPatterns("/signin").excludePathPatterns("/emailCheck").excludePathPatterns("/main")
 				.excludePathPatterns("/header")
 				.excludePathPatterns("/css/**", "/js/**", "/image/**", "/audio/**", "/node_modules/**")
-				.excludePathPatterns("/detail").excludePathPatterns("/upload").excludePathPatterns("/search")
+				.excludePathPatterns("/detail").excludePathPatterns("upload/**").excludePathPatterns("/search")
 				.excludePathPatterns("/index");
+				*/
 	}
 	
 	
@@ -44,7 +49,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		.addResourceLocations("file:///c:/workspace-spring-tool-suite-4-4.12.1.RELEASE/music_cloud/audio/");
 		
 		registry.addResourceHandler("/audio/**")
-		.addResourceLocations("file:///c:/workspace-spring-tool-suite-4-4.12.1.RELEASE/music_cloud/audio/");
+		//.addResourceLocations("file:///c:/workspace-spring-tool-suite-4-4.12.1.RELEASE/music_cloud/audio/");
+		.addResourceLocations("file:///C:/Users/CJH/git/Final_Project_1Team/music_cloud/audio/");
+		
 	}
 	
 

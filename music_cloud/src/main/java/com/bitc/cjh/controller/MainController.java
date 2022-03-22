@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bitc.cjh.common.AudioTagger;
+import com.bitc.cjh.dto.FileDto;
 import com.bitc.cjh.dto.MusicDto;
 import com.bitc.cjh.dto.MusicReplyDto;
 import com.bitc.cjh.dto.UserDto;
@@ -70,15 +72,17 @@ public class MainController {
 		return "index";
 	}
 
+	/*
 	@RequestMapping(value = "/header", method = RequestMethod.GET)
 	public String header(UserDto user, HttpServletRequest request, Model model) throws Exception {
 
-		/* 로그인 체크 */
+		//로그인 체크
 		HttpSession session = request.getSession();
 		session.setAttribute("userEmail", user.getUserEmail());
 
 		return "/layout/header";
 	}
+	*/
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainPage(UserDto user, Model model) throws Exception {
@@ -321,16 +325,22 @@ public class MainController {
 	/* ----- 업로드(최정환) ----- */
 
 	@RequestMapping(value="/upload")
-	public ModelAndView openIndex() throws Exception{
-		ModelAndView mv = new ModelAndView("/file_IO/upload_music");
+	public ModelAndView openUpload() throws Exception{
+		ModelAndView mv = new ModelAndView("/file/upload_music");
 		
 		return mv;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
-	public Map<String, Object> insertProductRegistration(MultipartHttpServletRequest multiFiles) throws Exception {		
+	public Map<String, Object> insertAudio(MultipartHttpServletRequest multiFiles, HttpServletRequest request) throws Exception {		
 		
-		ioService.insertAudio(multiFiles);
+		FileDto music = ioService.insertAudio(multiFiles);
+		
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("tag", music.getTag());
+		session.setAttribute("path", music.getStoredThumbPath());
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("SUCCESS", true);
@@ -338,6 +348,42 @@ public class MainController {
 		return result;
 	}
 	
+	@RequestMapping(value="/upload/desc", method=RequestMethod.GET)
+	public ModelAndView openUploadDesc(HttpServletRequest request) throws Exception {		
+		
+		HttpSession session = request.getSession();
+		
+		AudioTagger tag = (AudioTagger)session.getAttribute("tag");
+		String thumb_path = (String)session.getAttribute("path");
+		
+		session.removeAttribute("tag");
+		session.removeAttribute("path");
+		
+		MusicDto music = new MusicDto();
+		
+		music.setMusicTitle(tag.getTitle());
+		music.setMusicArtist(tag.getArtist());
+		music.setMusicAlbum(tag.getAlbum());
+		music.setGenre(tag.getGenre());
+		
+		ModelAndView mv = new ModelAndView("file/music_desc");
+		
+		mv.addObject("tag", music);
+		mv.addObject("thumb_path", thumb_path);
+		
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/upload/desc", method=RequestMethod.POST)
+	public String insertMusicDesc(MusicDto music) throws Exception {
+		
+		System.out.println(music.toString());
+		
+		ioService.insertMusicDesc(music);
+	
+		return "redirect:/main";
+	}
 	
 	
 	@RequestMapping(value="/audio")

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<link href="/node_modules/filepond/dist/filepond.css" rel="stylesheet">
+<link href="/node_modules/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.min.css" rel="stylesheet">
+<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+
+<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- FilePond library -->
+<script src="/node_modules/filepond/dist/filepond.min.js"></script>
+<!-- FilePond jQuery adapter -->
+<script src="/node_modules/jquery-filepond/filepond.jquery.js"></script>
+
+<!-- FilePond media preview plugin -->
+<script src="/node_modules/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.min.js"></script>
+<script src="/node_modules/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script>
+
+<title>Insert title here</title>
+</head>
+<body>
+
+
+	<div class="container  my-5 py-5">
+	
+		<div class="row border-dark border-top border-bottom py-5">
+		
+			<div class="col-5">
+			
+				<img class="img-fluid" id="thumb-img" name="thumbImg" src="/" th:attrappend="src=${thumb_path}">
+			
+			</div>
+			
+			<div class="col-7">
+			
+				<form id="frm" method="post" action="/upload/desc">
+				
+					<div class="my-3">
+						<label for="title">타이틀</label> 
+		            	<input type="text" class="form-control" id="title" name="musicTitle" th:value="${tag.musicTitle}">
+		            	
+		            </div>
+		            
+		            <div class="my-3">
+						<label for="artist">아티스트</label> 
+		            	<input type="text" class="form-control" id="artist" name="musicArtist"  th:value="${tag.musicArtist}">
+		            	
+		            </div>
+	
+		            <div class="my-3">
+						<label for="album">앨범</label> 
+		            	<input type="text" class="form-control" id="album" name="musicAlbum"  th:value="${tag.musicAlbum}">
+		            	
+		            </div>
+		            
+		            <div class="my-3">
+						<label for="genre" class="form-label">장르</label>
+						<select class="form-select" id="genre" name="genre">
+							<option th:selected="${tag.genre}=='1'" value="1">Ballad</option>
+							<option th:selected="${tag.genre}=='2'" value="2">Rap</option>
+							<option th:selected="${tag.genre}=='3'" value="3">Pop</option>
+							<option th:selected="${tag.genre}=='4'" value="4">Dance</option>
+							<option th:selected="${tag.genre}=='5'" value="5">Etc</option>
+						</select>
+					</div>
+		            
+			        <div class="my-3">
+						<label for="desc" class="form-label">내용 </label>
+						<textarea rows="5" class="form-control" id="desc" name="musicDesc"></textarea>
+					</div>
+					
+					<!-- 
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="privateRadioCheck" id="priave-radio-check2" value="Y" checked>
+						<label class="form-check-label" for="priave-radio-check2">공개</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="privateRadioCheck" id="priave-radio-check1" value="N">
+						<label class="form-check-label" for="priave-radio-check1">비공개</label>
+					</div>
+					 -->
+					 
+					 <div class="my-3 clearfix">
+						<button type="submit" class="btn btn-dark float-end">제출</button>
+					</div>
+				 
+				</form>
+
+									
+			</div>
+			
+		</div>
+		
+		
+	
+	</div>
+	
+	
+	    
+
+</body>
+</html>
