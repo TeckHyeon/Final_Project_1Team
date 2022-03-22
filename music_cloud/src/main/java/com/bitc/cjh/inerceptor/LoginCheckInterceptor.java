@@ -14,18 +14,12 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		
 		if ((String)session.getAttribute("userEmail") == null) {
-			System.out.println("====== interceptor ======");
-			System.out.println("비 로그인 상태 : ");
-			System.out.println((String)session.getAttribute("userEmail"));
 			
 			response.sendRedirect("/main");
 			return false;
 		}
 		else {
-			System.out.println("====== interceptor ======");
-			System.out.println("로그인 상태 : ");
-			System.out.println((String)session.getAttribute("userEmail"));
-			
+
 			session.setMaxInactiveInterval(1800);
 			return true;
 		}

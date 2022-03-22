@@ -75,7 +75,10 @@ public class MainController {
 
 		return "/layout/header";
 	}
-
+	@RequestMapping(value = "/footer", method = RequestMethod.GET)
+	public String footer() throws Exception {
+		return "/layout/footer";
+	}
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView mainPage(UserDto user, Model model) throws Exception {
 		ModelAndView mv = new ModelAndView("main");
@@ -302,14 +305,15 @@ public class MainController {
 
 	/* ----- 업로드(최정환) ----- */
 
-	@RequestMapping(value = "/upload")
+	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public ModelAndView openIndex() throws Exception {
-		ModelAndView mv = new ModelAndView("/file_IO/upload_music");
+		ModelAndView mv = new ModelAndView("file_IO/upload_music");
 
 		return mv;
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	@ResponseBody
 	public Map<String, Object> insertProductRegistration(MultipartHttpServletRequest multiFiles) throws Exception {
 
 		ioService.insertAudio(multiFiles);

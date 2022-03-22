@@ -15,63 +15,8 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-<script src="https://unpkg.com/wavesurfer.js"></script>
-<script>
-	document.addEventListener("DOMContentLoaded", function() {
+<script src="js/main_ajax.js"></script>
 
-		var mySwiper = new Swiper('.swiper-container', {
-			slidesPerView : 5,
-			slidesPerGroup : 5,
-
-			observer : true,
-			observeParents : true,
-			spaceBetween : 24,
-			navigation : {
-				nextEl : '.swiper-button-next',
-				prevEl : '.swiper-button-prev'
-			},
-			breakpoints : {
-				1280 : {
-					slidesPerView : 5,
-					slidesPerGroup : 5
-				},
-				720 : {
-					slidesPerView : 3,
-					slidesPerGroup : 3
-				}
-			}
-		});
-
-	});
-</script>
-<script>
-	document.addEventListener("DOMContentLoaded", function() {
-
-		var mySwiper = new Swiper('.swiper-container2', {
-			slidesPerView : 5,
-			slidesPerGroup : 5,
-
-			observer : true,
-			observeParents : true,
-			spaceBetween : 24,
-			navigation : {
-				nextEl : '.swiper-button-next',
-				prevEl : '.swiper-button-prev'
-			},
-			breakpoints : {
-				1280 : {
-					slidesPerView : 5,
-					slidesPerGroup : 5
-				},
-				720 : {
-					slidesPerView : 3,
-					slidesPerGroup : 3
-				}
-			}
-		});
-
-	});
-</script>
 <script>
 	$(document)
 			.ready(
@@ -248,7 +193,7 @@
 										th:attrappend="id=${itemStat.count}" />
 								</div>
 							</div>
-							
+
 						</div>
 
 					</div>
@@ -277,7 +222,9 @@
 
 								<div th:each="user : ${item.userList}">
 									<input class="fw-bold my-2 mx-5" type="text" name="creatorId"
-										readonly th:value="${user.user_name}" style="border: none; background-color: white" disabled="disabled">
+										readonly th:value="${user.user_name}"
+										style="border: none; background-color: white"
+										disabled="disabled">
 								</div>
 							</div>
 
@@ -327,6 +274,6 @@ When I said</textarea>
 	</main>
 	<footer th:include="layout/footer :: footer"></footer>
 </body>
-<script src="https://unpkg.com/wavesurfer.js@4.2.0/dist/wavesurfer.js"></script>
 <script src="/js/media.js"></script>
+<script src="https://unpkg.com/wavesurfer.js@5.2.0/dist/wavesurfer.js"></script>
 </html>

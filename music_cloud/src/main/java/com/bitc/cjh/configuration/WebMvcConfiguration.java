@@ -13,16 +13,21 @@ import com.bitc.cjh.inerceptor.LoginCheckInterceptor;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginCheckInterceptor()).addPathPatterns("/**").excludePathPatterns("/loginFail")
-				.excludePathPatterns("/login").excludePathPatterns("/loginCheck").excludePathPatterns("/")
-				.excludePathPatterns("/signin").excludePathPatterns("/emailCheck").excludePathPatterns("/main")
-				.excludePathPatterns("/header")
-				.excludePathPatterns("/css/**", "/js/**", "/image/**", "/song/**", "/node_modules/**")
-				.excludePathPatterns("/audio").excludePathPatterns("/upload").excludePathPatterns("/search")
-				.excludePathPatterns("/index").excludePathPatterns("/register").excludePathPatterns("/detail");
-	}
+	/*
+	 * @Override public void addInterceptors(InterceptorRegistry registry) {
+	 * registry.addInterceptor(new
+	 * LoginCheckInterceptor()).excludePathPatterns("/loginFail")
+	 * .excludePathPatterns("/login").excludePathPatterns("/loginCheck").
+	 * excludePathPatterns("/")
+	 * .excludePathPatterns("/signin").excludePathPatterns("/emailCheck").
+	 * excludePathPatterns("/main") .excludePathPatterns("/header")
+	 * .excludePathPatterns("/css/**", "/js/**", "/image/**", "/song/**",
+	 * "/node_modules/**")
+	 * .excludePathPatterns("/audio").excludePathPatterns("/upload").
+	 * excludePathPatterns("/search")
+	 * .excludePathPatterns("/index").excludePathPatterns("/register").
+	 * excludePathPatterns("/detail"); }
+	 */
 	
 	
 	@Bean
