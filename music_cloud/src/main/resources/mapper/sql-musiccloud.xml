@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.cjh.mapper.MusicCloudMapper">
+
+	<select id="searchMusic" parameterType="String" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[ 
+			SELECT
+				music_pk, music_category_pk, user_pk, music_artist, music_title, music_desc, like_count, privacy, created_dt
+			FROM
+				music
+			WHERE
+				music_title like CONCAT('%',#{keyword},'%')
+			AND
+				privacy = 'Y'
+		]]>
+	</select>
+	
+	<select id="checkMusicInfo" parameterType="int" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[ 
+			SELECT
+				music_pk, music_category_pk, user_pk, music_artist, music_title, music_desc, like_count, privacy, created_dt
+			FROM
+				music
+			WHERE
+				music_pk = #{musicPk}
+			AND
+				privacy = 'Y'
+		]]>
+	</select>
+	
+	<select id="checkFileInfo" parameterType="int" resultType="com.bitc.cjh.dto.FileDto">
+		<![CDATA[
+		SELECT
+			*
+		FROM
+			music_file 
+		WHERE
+			idx = #{musicPk}
+		]]>
+	</select>
+
+	<select id="importMusicInfo" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[
+			SELECT
+				music_pk, music_category_pk, user_pk, music_title, music_artist, music_desc, like_count, privacy, created_dt
+			FROM
+				music
+			WHERE
+				privacy = 'Y'
+			ORDER BY
+				like_count DESC
+		]]>
+	</select>
+
+	<select id="musicInfoByCategory" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[
+			SELECT
+			t1.music_pk, t1.music_category_pk, t1.user_pk, t1.music_title, t1.music_artist, t1.music_desc, t1.like_count, t1.privacy, t1.created_dt 
+			FROM 
+			music as t1, (SELECT music_pk, music_category_pk, user_pk, music_title, music_artist, music_desc, like_count, privacy, created_dt, max(like_count) as max_like FROM music group by music_category_pk) as t2
+			WHERE
+			t1.like_count = t2.max_like and t1.music_category_pk = t2.music_category_pk;
+		]]>
+	</select>
+	<select id="findFilePath" parameterType="int" resultType="map">
+		<![CDATA[
+		SELECT *
+		FROM music_file 
+		WHERE idx = #{musicPk}
+		]]>
+	</select>
+	<select id="userInfoByPk" parameterType="int" resultType="map">
+		<![CDATA[ 
+	SELECT
+		*
+	FROM
+		users
+	WHERE
+		user_pk = #{userPk}
+	]]>
+	</select>
+	<select id="viewDetailPage" parameterType="int" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[
+			SELECT
+				music_pk, music_category_pk, music_artist, user_pk, music_title, music_desc, like_count, privacy, created_dt
+			FROM
+				music
+			WHERE
+				music_pk = #{musicPk}
+			AND
+				privacy = 'Y'
+		]]>
+	</select>
+
+
+	<!-- 배진국 -->
+	<select id="reply" parameterType="int" resultType="com.bitc.cjh.dto.MusicReplyDto"></select>
+
+
+	<!-- 회원 프로필 및 플레이리스트(류주형) -->
+	<select id="selectUserProfile" resultType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_email, user_pw, user_name,
+				user_phone, like_list
+			FROM
+				users
+			WHERE
+				admin_yn = 'N'
+			ORDER BY
+				user_pk DESC
+		]]>
+	</select>
+
+	<select id="userProfile" parameterType="int" resultType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_email, user_pw, user_name,
+				user_phone, like_list
+			FROM
+				users
+			WHERE
+				user_pk = #{user_pk}
+		]]>
+	</select>
+
+	<select id="selectUserUpload" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[
+			SELECT
+				music_pk, music_category_pk, user_pk, music_title, like_count
+			FROM
+				music
+			WHERE
+				user_pk = #{user_pk}
+			AND
+				privacy = 'Y'
+			ORDER BY
+				music_pk DESC
+		]]>
+	</select>
+
+	<select id="selectUserPlaylist" resultType="com.bitc.cjh.dto.UserPlaylistDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_playlist_pk, user_playlist_name, playlist
+			FROM
+				userplaylist
+			WHERE
+				user_pk = #{user_pk}
+			ORDER BY
+				user_playlist_pk DESC
+		]]>
+	</select>
+	
+	<select id="selectMusicReplyList" parameterType="int" resultType="com.bitc.cjh.dto.ReplyDto">
+	
+		<![CDATA[
+			SELECT
+				*
+			FROM
+				music_reply
+			WHERE
+				music_pk = #{musicPk}
+			ORDER BY
+				music_reply_pk DESC
+		]]>
+	
+	</select>
+	
+	<insert id="insertMusicReply" parameterType="com.bitc.cjh.dto.ReplyDto">
+	
+		<![CDATA[
+			INSERT INTO
+				music_reply(music_pk, user_pk, user_name, reply)
+			VALUES
+				(#{musicPk}, #{userPk}, #{userName}, #{reply})
+		]]>
+	
+	</insert>
+
+</mapper>

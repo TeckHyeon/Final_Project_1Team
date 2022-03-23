@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.cjh.mapper.MemberMapper">
+
+	<insert id="signinUser" parameterType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[
+			INSERT INTO users
+				(user_email, user_pw, user_name, user_phone)
+			VALUES
+				(#{userEmail}, #{userPw}, #{userName},  #{userPhone})
+		]]>
+	</insert>
+	
+	<select id="selectMemberInfoYn" parameterType="map" resultType="int">
+		<![CDATA[ 
+			SELECT 
+				COUNT(*) AS cnt
+			FROM
+				users
+			WHERE
+				user_email = #{userEmail}
+			AND
+				user_pw = #{userPw}
+		]]>
+	</select>
+	
+	<select id="userInfoByPk" parameterType="int" resultType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[ 
+			SELECT
+				*
+			FROM
+				users
+			WHERE
+				user_pk = #{userPk}
+		]]>
+	</select>
+	
+	<select id="selectMember" parameterType="String" resultType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[ 
+			SELECT 
+				user_pk, user_email, user_name, user_phone, admin_yn
+			FROM
+				users
+			WHERE
+				user_email = #{userEmail}
+		]]>
+	</select>
+	
+	
+	<!-- 배진국 -->
+	<!-- 회원 정보 조회 -->
+	<select id="selectMemberInfo" parameterType="int" resultType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[ 
+			select 
+				user_pk, user_email, user_pw, user_name, user_phone
+			from 
+				users
+			where 
+				user_pk = #{userPk}
+		]]>
+	</select>
+	
+	<!-- 회원 가입 -->
+	<insert id="register" parameterType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[
+			insert into 
+				users(user_email, user_pw, user_name, user_phone)
+			values
+				(#{userEmail}, #{userPw}, #{userName}, #{userPhone}) 
+		]]>
+	</insert>
+	
+	<!-- 이메일 중복 체크 -->
+	<select id="emailCheck" parameterType="String" resultType="int">
+		<![CDATA[ 
+			select 
+				count(*)
+			from 
+				users
+			where 
+				user_email = #{userEmail}		
+		]]>
+	</select>	
+	
+	
+	<!-- 회원 정보 수정 -->
+	<update id="update" parameterType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[ 
+			update 
+				users 
+			set 
+				user_pw = #{userPw}, user_name = #{userName}, user_phone = #{userPhone}
+			where 
+				user_pk = #{userPk}
+		]]>
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="delete" parameterType="int">
+		<![CDATA[
+			delete from 
+				users 
+			where 
+				user_pk = #{userPk}
+		]]>
+	</delete>
+	
+	<!-- Email 찾기 count -->
+	<select id="findId" parameterType="com.bitc.cjh.dto.UserDto" resultType="int">
+		<![CDATA[ 
+			select 
+				count(*)
+			from
+				users
+			where
+				user_phone = #{userPhone}
+			and
+				user_name = #{userName}
+		]]>
+	</select>
+	
+	<!-- Email 찾기 tmepId-->
+	<select id="findGetId" parameterType="com.bitc.cjh.dto.UserDto" resultType="String">
+		<![CDATA[ 
+			select 
+				user_email
+			from
+				users
+			where
+				user_phone = #{userPhone}
+			and
+				user_name = #{userName}
+		]]>
+	</select>
+	
+	<!-- PW 찾기 count-->
+	<select id="findPw" parameterType="com.bitc.cjh.dto.UserDto" resultType="int">
+		<![CDATA[ 
+			select 
+				count(*)
+			from
+				users
+			where
+				user_phone = #{userEmail}
+			and
+				user_name = #{userPhone}
+		]]>
+	</select>
+	
+	<!-- PW 찾기 tempPw-->
+	<update id="updateTempPw" parameterType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[ 
+			update 
+				users 
+			set 
+				user_pw = #{userPw}
+			where 
+				user_email = #{userEmail}
+			and
+				user_phone = #{userPhone}
+		]]>
+	</update>
+	
+	
+</mapper>

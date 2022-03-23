@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.mapper.SoundMapper">
+	<select id="selectUserProfile"
+		resultType="com.bitc.dto.SoundDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_email, user_pw, user_name,
+				user_phone, like_list
+			FROM
+				users
+			WHERE
+				admin_yn = 'N'
+			ORDER BY
+				user_pk DESC
+		]]>
+	</select>
+
+	<select id="userProfile" parameterType="int"
+		resultType="com.bitc.dto.SoundDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_email, user_pw, user_name,
+				user_phone, like_list
+			FROM
+				users
+			WHERE
+				user_pk = #{user_pk}
+		]]>
+	</select>
+
+	<select id="selectUserPlaylist"
+		resultType="com.bitc.dto.SoundDto">
+		<![CDATA[
+			SELECT
+				user_pk, user_playlist_pk, user_playlist_name, playlist
+			FROM
+				userplaylist
+			WHERE
+				user_pk = #{user_pk}
+			ORDER BY
+				user_playlist_pk DESC
+		]]>
+	</select>
+
+</mapper>

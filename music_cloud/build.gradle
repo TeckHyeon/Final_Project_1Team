@@ -1,0 +1,73 @@
+plugins {
+
+	id "com.github.node-gradle.node" version "2.2.3"
+	
+	id 'org.springframework.boot' version '2.6.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+/**
+ * npm install start
+ */
+node {
+    version = '16.14.0'
+    download = true
+    nodeModulesDir = file("${projectDir}/src/main/resources/static")
+}
+
+task copyFrontLib(type: Copy) {
+    from "${projectDir}/src/main/resources/static"
+    into "${projectDir}/build/resources/main/static/."
+}
+
+copyFrontLib.dependsOn npmInstall
+compileJava.dependsOn copyFrontLib
+
+/**
+ * npm install end
+ */
+
+
+group = 'com.bitc.cjh'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	// https://mvnrepository.com/artifact/commons-io/commons-io
+	implementation 'commons-io:commons-io:2.11.0'
+	// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+	implementation 'commons-fileupload:commons-fileupload:1.4'
+	
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux
+	implementation 'org.springframework.boot:spring-boot-starter-webflux:2.6.3'
+	
+	// https://mvnrepository.com/artifact/net.jthink/jaudiotagger
+	implementation 'net.jthink:jaudiotagger:3.0.1'
+	
+	
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
