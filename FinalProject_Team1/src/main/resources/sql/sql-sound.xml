@@ -66,13 +66,25 @@
 				d.userplaylist_detail_pk, d.user_playlist_pk, m.music_pk,
 				m.music_category_pk, m.user_pk, m.music_title, m.like_count
 			FROM
-				userplaylist_detail d, music m, userplaylist u
+				userplaylist_detail d, music m
 			WHERE
 			    d.music_pk = m.music_pk
 			AND
 				d.user_playlist_pk = #{user_playlist_pk}
 			ORDER BY
 				d.userplaylist_detail_pk DESC
+		]]>
+	</select>
+	
+	<select id="selectUserPlaylistTitle"
+		resultType="com.bitc.dto.SoundDto">
+		<![CDATA[
+			SELECT
+				user_playlist_pk, user_playlist_name
+			FROM
+				userplaylist
+			WHERE
+				user_playlist_pk = #{user_playlist_pk}
 		]]>
 	</select>
 

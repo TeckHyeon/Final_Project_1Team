@@ -38,5 +38,10 @@ public class SoundServiceImpl implements SoundService {
 	public List<SoundDto> selectUserPlaylistDetail(int userPlaylistPk) throws Exception {
 		return soundMapper.selectUserPlaylistDetail(userPlaylistPk);
 	}
+	
+	@Override
+	public SoundDto selectUserPlaylistTitle(int userPlaylistPk) throws Exception{
+		return soundMapper.selectUserPlaylistTitle(userPlaylistPk);
+	}
 
 }

@@ -38,8 +38,10 @@ public class SoundController {
 		ModelAndView mv = new ModelAndView("/sound/playList");
 		
 		List<SoundDto> pld = soundService.selectUserPlaylistDetail(userPlaylistPk);
+		SoundDto title = soundService.selectUserPlaylistTitle(userPlaylistPk);
 		
 		mv.addObject("pld", pld);
+		mv.addObject("title", title);
 
 		return mv;
 	}

@@ -16,4 +16,6 @@ public interface SoundService {
 	
 	List<SoundDto> selectUserPlaylistDetail(int userPlaylistPk) throws Exception;
 	
+	SoundDto selectUserPlaylistTitle(int userPlaylistPk) throws Exception;
+	
 }
