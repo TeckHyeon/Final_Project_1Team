@@ -19,66 +19,55 @@
 
 <script>
 	$(document).ready(function() {
-		// 취소
-		$("#btn-cancel").on("click", function() {
-			history.back();
-		});
-
-		//아이디 중복 체크
-		$("#btn-email-check").on("click", function() {
-			var datas = {
-				userEmail : $("#user-email").val()
-			};
-
+		
+		$("#btn-ajax").on("click", function() {
+			
 			$.ajax({
-				url : "/register",
+				url : "/musicFile",
 				type : "post",
-				data : datas,
-
+				data : 0,
+				
 				success : function(data) {
-					if (data.count == 1) {
-						$("#email-dis").removeClass("d-none");
-						$("#email-en").addClass("d-none");
 
-						$("#btn-submit").addClass("disabled");
-					} else {
-						$("#email-en").removeClass("d-none");
-						$("#email-dis").addClass("d-none");
-
-						$("#btn-submit").removeClass("disabled");
+					for(var i in data) {
+						var insTag ="<p>" + data[i] + "</p> <audio src='/audio/" + data[i] + ".mp3' controls type='audio/mp3'></audio>"; 
+							insTag += "<a href = '/delete/" + data[i] + "' class='btn btn-danger'>삭제</button>"; 	 
+							
+							
+						$("#ajax-map").append(insTag);
 					}
 
 				},
 				error : function() {
 					alert("통신 실패")
 				},
+				complete : function() {
+				}
 			});
-		});
+		})
 
+	
 	});
 </script>
 
 </head>
 <body>
 	<header></header>
-	<main class=" mt-3 m-4">
+	
+	
+	<main class="container mt-3 m-4">
 		<div class="row">
 			<div class="col-12">
 				<div class="p-1 bg-secondary bg-opacity-25 rounded">
 					<h3 class="text-center">마이 페이지</h3>
 				</div>
 				<div class="my-1 p-3">
-					<div class="row justify-content-around" style="height: 140px;">
+					<div class="row justify-content-around" >
 						<div class="col-5 bg-secondary p-1 opacity-75">
-							<p class="text-black">음원 관리</p>
-							<div>음원 관리 1</div>
-							<!-- 
-							<div class="row border" th:if="${#lists.size(data)} > 0"
-								th:each="data : ${data.getList()}">
-								</div>
-								
-							<div th:unless="${#lists.size(data)} > 0">음원이 없습니다</div>
-							 -->
+							<p class="text-black">음원 관리<button type="button" id = "btn-ajax" class="btn btn-secondary">보기</button>
+							</p>
+							<div id = "ajax-map"></div>
+							
 						</div>
 						<div class="col-1"></div>
 						<div class="col-5 bg-secondary p-1 opacity-75">
@@ -87,34 +76,34 @@
 						</div>
 					</div>
 					<p />
-					<div class="row justify-content-around" style="height: 140px;">
+					<div class="row justify-content-around" >
 						<div class="col-5 bg-secondary p-1 opacity-75">
 							<p class="text-black">작성한 게시물 관리</p>
-							<div>게시물 관리 1</div>
+							<div class="row border" th:if="${#lists.size(music)} > 0"
+								th:each="music : ${music}">
+								<a href="/작성한 게시물/" th:attrappend="href=${music.musicPk}" th:text="${music.musicTitle}" class="text-black text-decoration-none"></a>
+							</div>
+							<div th:unless="${#lists.size(music)} > 0">게시물이 없습니다</div>
 						</div>
+						
 						<div class="col-1"></div>
 						<div class="col-5 bg-secondary p-1 opacity-75">
 							<p class="text-black">추천한 게시물</p>
 							<div>추천한 게시글 3</div>
 						</div>
+						
 					</div>
 
 					<p />
-					<div class="row" style="height: 140px;">
+					<div class="row" >
 						<div class="col-5 bg-secondary p-1 opacity-75">
 							<p class="text-black">작성한 댓글</p>
-							<div>댓글 3</div>
+							<div class="row border" th:if="${#lists.size(dataList)} > 0"
+								th:each="data : ${dataList}">
+								<a href="/댓글/" th:attrappend="href=${data.musicReplyPk}" th:text="${data.Reply}" class="text-black text-decoration-none"></a>
+							</div>
+							<div th:unless="${#lists.size(dataList)} > 0">댓글이 없습니다</div>
 						</div>
-
-						<!-- 
-							<div class="row border" th:if="${#lists.size(data)} > 0"
-								th:each="data : ${data.getList()}">
-								</div>
-								
-							<div th:unless="${#lists.size(data)} > 0">댓글이 없습니다</div>
-							 -->
-
-
 					</div>
 				</div>
 			</div>

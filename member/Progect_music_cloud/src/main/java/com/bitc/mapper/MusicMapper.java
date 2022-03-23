@@ -1,10 +1,13 @@
 package com.bitc.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.bitc.dto.FileDto;
+import com.bitc.dto.MusicDto;
 import com.bitc.dto.MusicReplyDto;
 import com.bitc.dto.UsersDto;
 
@@ -31,4 +34,12 @@ public interface MusicMapper {
 
 	List<MusicReplyDto> reply(@Param("userPk") int userPk) throws Exception;
 
+	ArrayList<MusicDto> music(@Param("userPk") int userPk) throws Exception;
+
+	List<FileDto> file(@Param("userEmail") String userEmail) throws Exception;
+
+	void fileDelete(@Param("fileName") String fileName) throws Exception;
+
+
 }
+

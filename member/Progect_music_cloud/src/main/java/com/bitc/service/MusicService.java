@@ -1,8 +1,11 @@
 package com.bitc.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.bitc.dto.FileDto;
+import com.bitc.dto.MusicDto;
 import com.bitc.dto.MusicReplyDto;
 import com.bitc.dto.UsersDto;
 
@@ -29,5 +32,12 @@ public interface MusicService {
 	Object findpwProcess(HashMap<String, Object> hashMap) throws Exception;
 
 	List<MusicReplyDto> reply(int userPk) throws Exception;
+
+	ArrayList<MusicDto> music(int userPk) throws Exception;
+
+	ArrayList<FileDto> file(String userEmail) throws Exception;
+
+	void fileDelete(String fileName) throws Exception;
+
 
 }

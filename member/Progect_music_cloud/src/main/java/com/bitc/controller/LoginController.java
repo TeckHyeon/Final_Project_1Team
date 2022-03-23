@@ -1,7 +1,8 @@
 package com.bitc.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bitc.dto.FileDto;
+import com.bitc.dto.MusicDto;
 import com.bitc.dto.MusicReplyDto;
 import com.bitc.dto.UsersDto;
 import com.bitc.service.MusicService;
@@ -24,6 +27,8 @@ public class LoginController {
 
 	@Autowired
 	MusicService musicService;
+	
+	String filePath = "C:/workspace-spring-tool-suite-4-4.12.1.RELEASE/music_cloud/audio/";
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(HttpServletRequest request) {
@@ -31,6 +36,7 @@ public class LoginController {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("userPk", 14);
+		session.setAttribute("userEmail", "c");
 		
 		return "/index";
 	}
@@ -112,17 +118,72 @@ public class LoginController {
 	}
 	
 	// 마이 페이지
-	@RequestMapping("/myPage")
+	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public Object myPage(HttpServletRequest request) throws Exception {
 		
 		HttpSession session = request.getSession();
+
 		int userPk = (int) session.getAttribute("userPk");
+		
 		
 		ModelAndView mv = new ModelAndView("/login/myPage");
 		
-		List<MusicReplyDto> replyData = musicService.reply(userPk); 
+		ArrayList<MusicReplyDto> replyData = (ArrayList<MusicReplyDto>) musicService.reply(userPk); 
+	
+		//수정
+		String userEmail = (String) session.getAttribute("userEmail");
+
+		
+		ArrayList<MusicDto> musicData = musicService.music(userPk);
+		
+		mv.addObject("dataList", replyData);
+		mv.addObject("music", musicData);
+		
 		return mv;
 	}
+	
+	//음원 관리 process
+	@ResponseBody
+	@RequestMapping(value = "/musicFile", method = RequestMethod.POST)
+	public Object musicFileName(HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+		
+		String userEmail = (String) session.getAttribute("userEmail");
+		ArrayList<FileDto> fileData = musicService.file(userEmail);
+		
+		ArrayList<Object> arr = new ArrayList<>();
+		
+		for(int i = 0; i < fileData.size(); i++) {
+			arr.add(fileData.get(i));
+		}
+		
+		return arr;
+	}
+	
+	// 음원 삭제
+	@RequestMapping(value = "/delete/{fileName}", method = RequestMethod.GET)
+	public String deleteFile(@PathVariable("fileName") String fileName) throws Exception {
+		
+        // 파일의 경로 + 파일명
+        filePath += fileName + ".mp3" ;
+        
+        File deleteFile = new File(filePath);
+ 
+        // 파일이 존재하는지 체크 존재할경우 true, 존재하지않을경우 false
+        if(deleteFile.exists()) {
+            
+            // 파일을 삭제합니다.
+            deleteFile.delete(); 
+            
+        } else {
+        }
+        
+        musicService.fileDelete(fileName);
+        
+        return "redirect:/myPage";
+    }
+	
 	
 	
 }

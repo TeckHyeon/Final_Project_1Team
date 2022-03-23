@@ -120,9 +120,51 @@
 <!-- 마이 페이지 -->
 <!-- 댓글 -->
 <select id="reply" parameterType="int" resultType="com.bitc.dto.MusicReplyDto">
-
+	<![CDATA[ 
+		select 
+			music_reply_pk, reply 
+		from 
+			music_reply
+		where 
+			user_Pk = #{userPk}
+		and 
+			deleted_yn = "N"
+	]]>
 </select>
 		
+<!-- 작성한 게시물 -->
+<select id="music" parameterType="int" resultType="com.bitc.dto.MusicDto">
+	<![CDATA[ 
+		select 
+			music_pk, music_title, privacy 
+		from 
+			music
+		where 
+			user_pk = #{userPk};
+	]]>
+</select>
+
+<!-- 음원 관리 -->
+<select id="file" parameterType="String" resultType="String">
+	<![CDATA[ 
+		select 
+			original_file_name 
+		from 
+			music_file
+		where 
+			uploader_id = #{userEmail};
+	]]>
+</select>
+
+<!-- 음원 파일 삭제-->
+<select id="fileDelete" parameterType="String">
+	<![CDATA[ 
+		delete from 
+			music_file 
+		where 
+			original_file_name = #{fileName};
+	]]>
+</select>
 
 
 </mapper>

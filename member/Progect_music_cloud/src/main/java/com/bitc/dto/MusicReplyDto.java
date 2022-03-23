@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class MusicReplyDto {
 
-	int musicReplyPk; 
-	int musicPk;
-	int userPk;
-	String reply; 
-	String deletedYn;
+	private int musicReplyPk; 
+	private int musicPk;
+	private int userPk;
+	private String reply; 
+	private String deletedYn;
 }

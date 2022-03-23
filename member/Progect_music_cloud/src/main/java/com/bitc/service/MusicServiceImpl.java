@@ -1,5 +1,6 @@
 package com.bitc.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -7,6 +8,8 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bitc.dto.FileDto;
+import com.bitc.dto.MusicDto;
 import com.bitc.dto.MusicReplyDto;
 import com.bitc.dto.UsersDto;
 import com.bitc.mapper.MusicMapper;
@@ -124,6 +127,23 @@ public class MusicServiceImpl implements MusicService{
 	public List<MusicReplyDto> reply(int userPk) throws Exception {
 		return musicMapper.reply(userPk);
 	}
+
+	@Override
+	public ArrayList<MusicDto> music(int userPk) throws Exception {
+		return musicMapper.music(userPk);
+	}
+
+	@Override
+	public ArrayList<FileDto> file(String userEmail) throws Exception {
+		return (ArrayList<FileDto>) musicMapper.file(userEmail);
+	}
+
+	@Override
+	public void fileDelete(String fileName) throws Exception {
+		musicMapper.fileDelete(fileName);
+	}
+
+
 
 	
 }
