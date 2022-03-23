@@ -265,7 +265,7 @@ a {
 															<span class="row text-muted fw-light ms-1 mt-1"
 																style="font-size: 15px" th:text="${user.userName}">작성자</span>
 														</div>
-														<a href="#" class="row fs-2 fw-light ms-1"
+														<a href="playlist.do?userPlaylistPk=" th:attrappend="href=${sound.userPlaylistPk}" th:text="${sound.userName}" class="row fs-2 fw-light ms-1"
 															style="margin-top: -0.3em;"
 															th:text="${composition.userPlaylistName}"></a>
 													</div>
