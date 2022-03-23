@@ -13,11 +13,13 @@ import com.bitc.cjh.inerceptor.LoginCheckInterceptor;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 	
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(
 				
 				new LoginCheckInterceptor()).addPathPatterns("/detail");
+			
 				/*
 				new LoginCheckInterceptor()).addPathPatterns("/**").excludePathPatterns("/loginFail")
 				.excludePathPatterns("/login").excludePathPatterns("/loginCheck").excludePathPatterns("/")
@@ -27,8 +29,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 				.excludePathPatterns("/detail").excludePathPatterns("upload/**").excludePathPatterns("/search")
 				.excludePathPatterns("/index");
 				*/
+			
 	}
-	
 	
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {

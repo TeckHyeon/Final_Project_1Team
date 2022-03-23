@@ -16,6 +16,8 @@ public interface MemberService {
 	
 	List<UserDto> userInfoByPk(int userPk) throws Exception;
 	
+	UserDto selectMember(String userEmail) throws Exception;
+	
 	
 	/* ----- 배진국 ----- */
 	void register(UserDto memberDto) throws Exception;
@@ -38,6 +40,8 @@ public interface MemberService {
 	void updateTempPw(UserDto memberDto) throws Exception;
 
 	Object findpwProcess(HashMap<String, Object> hashMap) throws Exception;
+
+	
 
 
 	

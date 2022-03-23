@@ -17,6 +17,8 @@ public interface MemberMapper {
 
 	List<UserDto> userInfoByPk(int userPk) throws Exception;
 	
+	UserDto selectMember(String userEmail) throws Exception;
+	
 	void register(UserDto memberDto) throws Exception;
 
 	void update(UserDto memberDto) throws Exception;
@@ -34,5 +36,7 @@ public interface MemberMapper {
 	int findPw(UserDto memberDto) throws Exception;
 
 	void updateTempPw(UserDto memberDto) throws Exception;
+
+	
 	
 }

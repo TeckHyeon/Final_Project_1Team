@@ -15,7 +15,7 @@
 	<insert id="insertAudio" parameterType="com.bitc.cjh.dto.FileDto">
 		<![CDATA[ 
 			INSERT INTO
-				music_file (original_file_name, stored_file_path, stored_thumb_path, file_size, created_dt)
+				music_file (original_file_name, stored_file_path, stored_thumb_path, file_size, user_pk, created_dt)
 			VALUES
 		]]>
 		<foreach collection="list" item="item" separator=",">
@@ -23,6 +23,7 @@
 			 #{item.storedFilePath}, 
 			 #{item.storedThumbPath}, 
 			 #{item.fileSize},
+			 #{item.userPk},
 			 NOW())
 		</foreach>
 	</insert>
@@ -30,9 +31,9 @@
 	<insert id="insertMusicDesc" parameterType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[ 
 			INSERT INTO
-				music(music_category_pk, music_title, music_artist, music_album, music_desc, created_dt)
+				music(music_category_pk, user_pk, music_title, music_artist, music_album, music_desc, created_dt)
 			VALUES
-				(#{genre}, #{musicTitle}, #{musicArtist}, #{musicAlbum}, #{musicDesc}, NOW())
+				(#{genre}, #{userPk}, #{musicTitle}, #{musicArtist}, #{musicAlbum}, #{musicDesc}, NOW())
 		]]>
 	
 	</insert>

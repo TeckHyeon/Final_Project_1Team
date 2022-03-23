@@ -35,6 +35,13 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
+	public UserDto selectMember(String userEmail) throws Exception {
+		return memberMapper.selectMember(userEmail);
+	}
+	
+	
+	
+	@Override
 	public void register(UserDto memberDto) throws Exception {
 		memberMapper.register(memberDto);
 	}
@@ -136,5 +143,7 @@ public class MemberServiceImpl implements MemberService{
 		
 		return map;
 	}
+
+
 
 }

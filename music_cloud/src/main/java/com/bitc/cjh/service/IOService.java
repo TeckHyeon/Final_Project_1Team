@@ -9,7 +9,7 @@ import com.bitc.cjh.dto.MusicDto;
 public interface IOService {
 	
 	//DB 관련 추상 메서드(abstract 생략 가능)
-	FileDto insertAudio(MultipartHttpServletRequest multiFiles) throws Exception;
+	FileDto insertAudio(MultipartHttpServletRequest multiFiles, int userPk) throws Exception;
 	
 	void insertMusicDesc(MusicDto music) throws Exception;
 

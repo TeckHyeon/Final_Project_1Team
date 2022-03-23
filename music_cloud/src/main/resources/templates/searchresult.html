@@ -3,16 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
 <style>
 .footer {
-	background-color: grey;
+	position: fixed !important;
+    bottom: 0;
+    width: 100%;
+    -webkit-perspective: 900;
+    perspective: 900;
+    -webkit-perspective-origin: 80% 100%;
+    perspective-origin: 80% 100%;
+    z-index: 30;
 }
 
 .r1 {
@@ -77,20 +92,23 @@ a {
 	outline: none !important;
 	box-shadow: none;
 }
+#container {
+ margin-bottom: 10em;
+}
 </style>
 <script src="js/main_ajax.js"></script>
 
-<!-- <script>
+<script>
 	$(document).ready(function() {
 		var el = document.getElementById('container');
-		var ch = el.scrollHeight + 300 + "px";
-		var thumb = document.getElementById('thumb');
-		var nods = document.getElementById('listsSize');
-		for (var i = 1; i < nods.value; i++) {
-			var player = document.getElementById('player' + i);
-			el.style.height = ch;
+		var ch = el.scrollHeight + "px";
+		el.style.height = ch;
+		const listsSize = $("#listsSize").val();
+		for (let i = 1; i <= listsSize; i++) {
+			var player = document.getElementById('player');
+			var thumb = document.getElementById('thumb');
 			var waveform = document.getElementById('wave' + i);
-			var width = player.clientWidth - thumb.clientWidth + 10 + "px";
+			var width = player.clientWidth - thumb.clientWidth + "px";
 			waveform.style.width = width;
 			console.log(waveform.style.width);
 
@@ -98,9 +116,14 @@ a {
 
 	});
 	window.onresize = function(event) {
-		for (var i = 1; i < nods.value; i++) {
-			var player = document.getElementById('player' + i);
-			var waveform = document.getElementById('wave');
+		var el = document.getElementById('container');
+		var ch = el.scrollHeight + "px";
+		el.style.height = ch;
+		console.log(ch);
+		const listsSize = $("#listsSize").val();
+		for (let i = 1; i <= listsSize; i++) {
+			var player = document.getElementById('player');
+			var waveform = document.getElementById('wave' + i);
 			var thumb = document.getElementById('thumb');
 			var width = player.clientWidth - thumb.clientWidth + "px";
 			/* 	console.log(width); */
@@ -108,44 +131,35 @@ a {
 		}
 
 	}
-</script> -->
-<script>
-	
-</script>
-
-
-<!-- <script>
 	$(document).ready(function() {
-		var listsSize = $("#listsSize").val();
-		var nods = 3;
-		for (var i = 1; i < nods; i++) {
 
-			var duration = document.querySelector("#duration" + i);
-			var current = document.getElementById('current' + i);
-			var playbtn = document.getElementById('playbtn' + i);
-			var volumeSlider = document.getElementById('volumeSlider' + i);
-			var volumeIcon = document.getElementById('volumeIcon' + i);
-			var player = document.getElementById('player' + i);
-			var waveform = document.getElementById('wave' + i);
+		$(document).scroll(function() {
+			var el = document.getElementById('container');
+			var ch = el.scrollHeight + "px";
+			el.style.height = ch;
+			console.log(ch);
+			const listsSize = $("#listsSize").val();
+			for (let i = 1; i <= listsSize; i++) {
+				var player = document.getElementById('player');
+				var waveform = document.getElementById('wave' + i);
+				var thumb = document.getElementById('thumb');
+				var width = player.clientWidth - thumb.clientWidth + "px";
+				/* 	console.log(width); */
+				waveform.style.width = width;
+			}
 
-			console.log(duration);
-			console.log(current);
-			console.log(playbtn);
-			console.log(volumeSlider);
-			console.log(player);
-			console.log(waveform);
-
-		}
+		});
 	});
-</script> -->
-
+</script>
+<script src="js/login.js"></script>
 </head>
 <body style="background-color: #F2F2F2;">
 	<header th:include="layout/header :: header"></header>
 	<main>
 		<div class="row">
 			<div class="col-2"></div>
-			<div class="col-8 mx-auto container" style="background-color: white; height: auto;" id="container">
+			<div class="col-8 mx-auto container mt-4"
+				style="background-color: white; height: auto;" id="container">
 				<div class="d-flex flex-column">
 					<div class="mt-3 mx-3">
 						<h3>
@@ -153,134 +167,197 @@ a {
 						</h3>
 						<hr>
 					</div>
-					<input type="hidden" id="listsSize" th:value="${#lists.size(search)}" name="listsSize">
+
 					<div class="mt-3 mx-3">
 						<h5 th:if="${#lists.size(search)} > 0">
-							Found <span><span th:text="${#lists.size(search)}"></span> tracks</span>
+							Found <span><span th:text="${#lists.size(search)}"></span>
+								tracks</span>
 						</h5>
 						<h5 th:unless="${#lists.size(search)} > 0">No result</h5>
 					</div>
 					<div th:if="${#lists.size(search)} > 0" th:each="item : ${search}">
 						<!-- <input type="hidden" th:value="${item.userPk}" name="userPk"> -->
 
-						<div class="player my-4 d-flex flex-row" id="player">
-							<img class="thumb ms-3 col-2" src="image/sunshine blvd - Ocean Blue.jpg" id="thumb" style="width: 9rem; height: 9rem;" />
+						<div class="player my-4 d-flex flex-row" id="player"
+							style="background-color: white">
+							<img class="thumb ms-3 col-2"
+								src="image/sunshine blvd - Ocean Blue.jpg" id="thumb"
+								style="width: 9rem; height: 9rem;" />
 							<div class="info ms-3 col-10" style="margin-left: -1rem;">
 								<div class="detail">
 									<div class="">
 										<div class="d-flex">
 											<div class="control" style="width: 2.5rem; height: 2.5rem;">
-												<img class="fi-rr-play" id="playbtn" src="image/play.png" style="width: 2.5rem; height: 2.5rem;" th:attrappend="id=${item.musicPk}">
+												<img class="fi-rr-play" id="playbtn" src="image/play.png"
+													style="width: 2.5rem; height: 2.5rem;"
+													th:attrappend="id=${itemStat.count}"> <input
+													type="hidden" id="listsSize" th:value="${itemStat.size}"
+													name="listsSize">
 											</div>
 											<div class="title ms-1">
-												<div th:each="user : ${users}">
-													<span class="row text-muted fw-light ms-1 mt-1" style="font-size: 13px" th:text="${user.userName}">작성자</span>
+												<div th:each="user : ${item.userList}">
+													<span class="row text-muted fw-light mx-1 mt-1"
+														style="font-size: 13px" th:text="${user.user_name}">작성자</span>
 												</div>
-												<span class="row fs-5 fw-light ms-1" style="margin-top: -0.3em;" th:text="${item.musicTitle}"></span>
+												<div th:each="file : ${item.fileList}">
+													<input type="hidden" th:value="${file.stored_file_path}"
+														id="filePath" th:attrappend="id=${itemStat.count}">
+												</div>
+												<div class="d-flex flex-row">
+													<span class="row fs-5 fw-light mx-1"
+														style="margin-top: -0.3em;" th:text="${item.artistName}"></span>
+													- <span class="row fs-5 fw-light mx-2"
+														style="margin-top: -0.3em;" th:text="${item.musicTitle}"></span>
+												</div>
+
+												<input type="hidden" class="row fs-5 fw-light ms-1"
+													style="margin-top: -0.3em; color: black;"
+													th:value="${item.musicPk}" name="musicPk" id="musicPk">
+
 											</div>
 										</div>
-										<div id="wave" class="ms-1 d-flex flex-column-reverse wave" style="width: auto;" th:attrappend="id=${item.musicPk}">
-											<div class="time d-flex justify-content-between col-10 mt-2" id="timeline" style="margin-top: -0.3rem;">
+										<div id="wave" class="ms-1 d-flex flex-column-reverse wave"
+											style="width: auto; overflow: hidden;"
+											th:attrappend="id=${itemStat.count}">
+											<div class="time d-flex justify-content-between col-10 mt-2"
+												id="timeline" style="margin-top: -0.3rem;">
 												<div class="mt-1">
-													<span id="current" style="color: #f89b00;" th:attrappend="id=${item.musicPk}">0:00</span> / <span id="duration" th:attrappend="id=${item.musicPk}">0:00</span>
+													<span id="current" style="color: #f89b00;"
+														th:attrappend="id=${itemStat.count}">0:00</span> / <span
+														id="duration" th:attrappend="id=${itemStat.count}">0:00</span>
+
 												</div>
 												<div class="volume">
-													<img id="volumeIcon" class="volume-icon" src="image/volume_black.png" alt="Volume" style="width: 1.5rem; height: 1.5rem;"
-														th:attrappend="id=${item.musicPk}"
-													/> <input id="volumeSlider" class="volume-slider mx-2" type="range" name="volume-slider" min="0" max="100" value="50"
-														th:attrappend="id=${item.musicPk}"
-													/>
+													<img id="volumeIcon" class="volume-icon"
+														src="image/volume_black.png" alt="Volume"
+														style="width: 1.5rem; height: 1.5rem;"
+														th:attrappend="id=${itemStat.count}" /> <input
+														id="volumeSlider" class="volume-slider mx-2" type="range"
+														name="volume-slider" min="0" max="100" value="50"
+														th:attrappend="id=${itemStat.count}" />
 												</div>
 											</div>
+
 										</div>
 
-										<form id="comment" style="margin-top: -1rem" class="col-10">
-											<input type="image" name="button" src="image/profile.jpg" disabled="disabled"
-												style="width: 1.5rem; height: 1.5rem; margin-bottom: -1.9rem; border: none;"
-											> <input class="form-control border-top " type="text" placeholder="댓글 달기..." style="height: 1.5rem; padding-left: 1.7rem">
-											<button type="submit" class="btn float-end bg-transparent text-primary" style="margin-top: -1.9rem; border: none;">게시</button>
+										<form id="comment" style="margin-top: -1rem" class="col-11"
+											th:attrappend="id=${itemStat.count}">
+											<input type="image" name="button" src="image/profile.jpg"
+												disabled="disabled"
+												style="width: 1.5rem; height: 1.5rem; margin-bottom: -1.9rem; border: none;">
+											<input class="form-control border-top " type="text"
+												placeholder="댓글 달기..."
+												style="height: 1.5rem; padding-left: 1.7rem">
+											<button type="submit"
+												class="btn float-end bg-transparent text-primary"
+												style="margin-top: -1.9rem; border: none;">게시</button>
 										</form>
-										<div class="my-2 col-10">
+										<div class="my-2 col-11">
 											<button class="btn btn-sm likes_btn">
 												<div class="d-flex">
-													<i class="material-icons" style="font-size: 20px"> favorite </i><span class="ms-2">좋아요</span>
+													<i class="material-icons" style="font-size: 20px">
+														favorite </i><span class="ms-2">좋아요</span>
 												</div>
 											</button>
 											<button class="btn btn-sm list_add_btn">
 												<div class="d-flex">
-													<i class="material-icons"> playlist_add </i><span class="ms-2">플레이리스트에 추가</span>
+													<i class="material-icons"> playlist_add </i><span
+														class="ms-2">플레이리스트에 추가</span>
 												</div>
 											</button>
 											<button class="btn btn-sm play_list_btn">
 												<div class="d-flex">
-													<i class="material-icons"> playlist_play </i><span class="ms-2">재생목록에 추가</span>
+													<i class="material-icons"> playlist_play </i><span
+														class="ms-2">재생목록에 추가</span>
 												</div>
 											</button>
-											<button class="btn btn-sm float-end">
-												<div class="d-flex">
-													<i class="material-icons text-muted" style="font-size: 20px"> chat_bubble </i><span class="ms-2">comments</span>
-												</div>
-											</button>
+											<a class="btn btn-sm float-end" href="/detail?musicPk="
+												th:attrappend="href=${item.musicPk}"> <i
+												class="material-icons text-muted" style="font-size: 20px">
+													chat_bubble </i><span class="ms-2">comments</span>
+
+											</a>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<input type="text" id="src1" value="song/sunshine blvd - Ocean Blue.wav" name="src" class="src">
+					<input type="hidden" id="src1"
+						value="song/sunshine blvd - Ocean Blue.wav" name="src" class="src">
 					<div th:unless="${#lists.size(search)} > 0">
 						<div class="player my-4 d-flex flex-row" id="player">
-							<img class="thumb ms-3 col-2" src="image/sunshine blvd - Ocean Blue.jpg" id="thumb" style="width: 9rem; height: 9rem;" />
+							<img class="thumb ms-3 col-2"
+								src="image/sunshine blvd - Ocean Blue.jpg" id="thumb"
+								style="width: 9rem; height: 9rem;" />
 							<div class="info ms-3 col-10" style="margin-left: -1rem;">
 								<div class="detail">
 									<div class="">
 										<div class="d-flex">
 											<div class="control" style="width: 2.5rem; height: 2.5rem;">
-												<img class="fi-rr-play" id="playbtn" src="image/play.png" style="width: 2.5rem; height: 2.5rem;">
+												<img class="fi-rr-play" id="playbtn" src="image/play.png"
+													style="width: 2.5rem; height: 2.5rem;">
 											</div>
 											<div class="title ms-1">
-												<span class="row text-muted fw-light ms-1 mt-1" style="font-size: 13px">작성자</span> <span class="row fs-5 fw-light ms-1" style="margin-top: -0.3em;">sunshine
+												<span class="row text-muted fw-light ms-1 mt-1"
+													style="font-size: 13px">작성자</span> <span
+													class="row fs-5 fw-light ms-1" style="margin-top: -0.3em;">sunshine
 													blvd. - Ocean Blue</span>
 											</div>
 										</div>
-										<div id="wave" class="ms-1 d-flex flex-column-reverse" style="width: auto;">
-											<div class="time d-flex justify-content-between col-10 mt-2" id="timeline" style="margin-top: -0.3rem;">
+										<div id="wave" class="ms-1 d-flex flex-column-reverse"
+											style="width: auto;">
+											<div class="time d-flex justify-content-between col-10 mt-2"
+												id="timeline" style="margin-top: -0.3rem;">
 												<div class="mt-1">
-													<span id="current" style="color: #f89b00;">0:00</span> / <span id="duration">0:00</span>
+													<span id="current" style="color: #f89b00;">0:00</span> / <span
+														id="duration">0:00</span>
 												</div>
 												<div class="volume">
-													<img id="volumeIcon" class="volume-icon" src="image/volume_black.png" alt="Volume" style="width: 1.5rem; height: 1.5rem;" /> <input
-														id="volumeSlider" class="volume-slider mx-2" type="range" name="volume-slider" min="0" max="100" value="50"
-													/>
+													<img id="volumeIcon" class="volume-icon"
+														src="image/volume_black.png" alt="Volume"
+														style="width: 1.5rem; height: 1.5rem;" /> <input
+														id="volumeSlider" class="volume-slider mx-2" type="range"
+														name="volume-slider" min="0" max="100" value="50" />
 												</div>
 											</div>
 										</div>
 
 										<form id="comment" style="margin-top: -1rem" class="col-10">
-											<input type="image" name="button" src="image/profile.jpg" disabled="disabled"
-												style="width: 1.5rem; height: 1.5rem; margin-bottom: -1.9rem; border: none;"
-											> <input class="form-control border-top " type="text" placeholder="댓글 달기..." style="height: 1.5rem; padding-left: 1.7rem">
-											<button type="submit" class="btn float-end bg-transparent text-primary" style="margin-top: -1.9rem; border: none;">게시</button>
+											<input type="image" name="button" src="image/profile.jpg"
+												disabled="disabled"
+												style="width: 1.5rem; height: 1.5rem; margin-bottom: -1.9rem; border: none;">
+											<input class="form-control border-top " type="text"
+												placeholder="댓글 달기..."
+												style="height: 1.5rem; padding-left: 1.7rem">
+											<button type="submit"
+												class="btn float-end bg-transparent text-primary"
+												style="margin-top: -1.9rem; border: none;">게시</button>
 										</form>
 										<div class="my-2 col-10">
 											<button class="btn btn-sm likes_btn">
 												<div class="d-flex">
-													<i class="material-icons" style="font-size: 20px"> favorite </i><span class="ms-2">좋아요</span>
+													<i class="material-icons" style="font-size: 20px">
+														favorite </i><span class="ms-2">좋아요</span>
 												</div>
 											</button>
 											<button class="btn btn-sm list_add_btn">
 												<div class="d-flex">
-													<i class="material-icons"> playlist_add </i><span class="ms-2">플레이리스트에 추가</span>
+													<i class="material-icons"> playlist_add </i><span
+														class="ms-2">플레이리스트에 추가</span>
 												</div>
 											</button>
 											<button class="btn btn-sm play_list_btn">
 												<div class="d-flex">
-													<i class="material-icons"> playlist_play </i><span class="ms-2">재생목록에 추가</span>
+													<i class="material-icons"> playlist_play </i><span
+														class="ms-2">재생목록에 추가</span>
 												</div>
 											</button>
 											<button class="btn btn-sm float-end">
 												<div class="d-flex">
-													<i class="material-icons text-muted" style="font-size: 20px"> chat_bubble </i><span class="ms-2">comments</span>
+													<i class="material-icons text-muted"
+														style="font-size: 20px"> chat_bubble </i><span
+														class="ms-2">comments</span>
 												</div>
 											</button>
 										</div>
@@ -295,103 +372,12 @@ a {
 			</div>
 			<div class="col-2"></div>
 		</div>
-
+		<script src="https://unpkg.com/wavesurfer.js@5.2.0/dist/wavesurfer.js"></script>
+		<script type="text/javascript" src="/js/main.js"></script>
+		<script src="/js/media.js"></script>
 
 	</main>
-	<footer th:include="layout/footer :: footer"></footer>
+	<footer th:include="layout/footer :: footer" class="footer"></footer>
 </body>
-<script src="https://unpkg.com/wavesurfer.js@4.2.0/dist/wavesurfer.js"></script>
-<script>
-	$(document).ready(function() {
-		var playbtn = $(this).find('.fi-rr-play');
-		$('.player').each(function() {
 
-			var wave = $(this).find('.wave').attr('id');
-
-			var src = $("#src1").val();
-
-			var wavesurfer = WaveSurfer.create({
-				container : '#' + wave,
-				progressColor : '#a4aa00',
-				waveColor : '#9a9a9a',
-				cursorColor : '#a4aa00',
-				responsive : 'true'
-			});
-			$(this).data('wavesurfer', wavesurfer)
-			wavesurfer.load(src);
-
-			wavesurfer.on('ready', function() {
-				wavesurfer.play();
-			});
-
-			$(playbtn).on('click', function() {
-				wavesurfer.playPause();
-			});
-		});
-
-	});
-</script>
-
-
-<!-- <script src="/js/media.js"></script>
-<!-- <script>
-	$(document).ready(function() {
-		var nods = 3;
-		for (var i = 1; i < nods; i++) {
-			var wave = [];
-			wave[i] = document.getElementById('wave' + i);
-			var playbtn = [];
-			playbtn[i] = document.getElementById('playbtn' + i);
-			console.log(playbtn[i]);
-			var wavesurfer = [];
-			wavesurfer[i] = WaveSurfer.create({
-				container : wave[i],
-				waveColor : "#cdedff",
-				progressColor : "#1AAFFF",
-				height : 70,
-				fillParent : true,
-				maxCanvasWidth : 10,
-				scrollParent : false,
-				responsive : true,
-				barWidth : 2,
-				barHeight : 1,
-				barGap : null,
-			});
-			wavesurfer[i].load("song/sunshine blvd - Ocean Blue.wav");
-			$(document).on('click', playbtn[i], function() {
-				wavesurfer[i].playPause();
-			});
-		}
-	});
-</script>
-<!-- <script>
-	$(document).ready(function() {
-
-		var wave = document.getElementById('wave1');
-
-		var wavesurfer = WaveSurfer.create({
-			container : wave,
-			waveColor : "#cdedff",
-			progressColor : "#1AAFFF",
-			height : 70,
-			fillParent : true,
-			maxCanvasWidth : 10,
-			scrollParent : false,
-			responsive : true,
-			barWidth : 2,
-			barHeight : 1,
-			barGap : null,
-		});
-		wavesurfer.load("song/sunshine blvd - Ocean Blue.wav");
-		nods = 3;
-		for (var i = 1; i < nods; i++) {
-			var playbtn = [];
-			playbtn[i] = document.getElementById('playbtn' + i);
-			console.log(playbtn[i]);
-			$(document).on('click', playbtn[i], function() {
-				wavesurfer.playPause();
-			});
-		}
-	});
-</script> -->
 </html>

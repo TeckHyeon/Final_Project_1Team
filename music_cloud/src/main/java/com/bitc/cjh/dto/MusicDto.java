@@ -1,5 +1,7 @@
 package com.bitc.cjh.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -19,5 +21,7 @@ public class MusicDto {
 	private char privacy;
 	
 	private String createdDt;
+	private List<FileDto> fileList;
+	private List<UserDto> userList;
 	
 }

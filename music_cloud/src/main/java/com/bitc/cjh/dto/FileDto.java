@@ -16,7 +16,7 @@ public class FileDto {
 	private String originalThumbName;
 	private String storedThumbPath;
 	private String fileSize;
-	private String uploadId;
+	private int userPk;
 	private String createdDt;
 	
 	private AudioTagger tag;

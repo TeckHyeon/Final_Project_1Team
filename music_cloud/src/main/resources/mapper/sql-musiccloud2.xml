@@ -10,12 +10,11 @@
 			FROM
 				music
 			WHERE
-				music_title like CONCAT('%',#{keyword},'%')
+				music_title like CONCAT('%',#{keyword},'%') OR music_artist like CONCAT('%',#{keyword},'%')
 			AND
 				privacy = 'Y'
 		]]>
 	</select>
-	
 	<select id="checkMusicInfo" parameterType="int" resultType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[ 
 			SELECT
@@ -28,7 +27,6 @@
 				privacy = 'Y'
 		]]>
 	</select>
-	
 	<select id="checkFileInfo" parameterType="int" resultType="com.bitc.cjh.dto.FileDto">
 		<![CDATA[
 		SELECT
@@ -39,7 +37,6 @@
 			idx = #{musicPk}
 		]]>
 	</select>
-
 	<select id="importMusicInfo" resultType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[
 			SELECT
@@ -152,31 +149,5 @@
 				user_playlist_pk DESC
 		]]>
 	</select>
-	
-	<select id="selectMusicReplyList" parameterType="int" resultType="com.bitc.cjh.dto.ReplyDto">
-	
-		<![CDATA[
-			SELECT
-				*
-			FROM
-				music_reply
-			WHERE
-				music_pk = #{musicPk}
-			ORDER BY
-				music_reply_pk DESC
-		]]>
-	
-	</select>
-	
-	<insert id="insertMusicReply" parameterType="com.bitc.cjh.dto.ReplyDto">
-	
-		<![CDATA[
-			INSERT INTO
-				music_reply(music_pk, user_pk, user_name, reply)
-			VALUES
-				(#{musicPk}, #{userPk}, #{userName}, #{reply})
-		]]>
-	
-	</insert>
 
 </mapper>
