@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 
 <link href="/node_modules/filepond/dist/filepond.css" rel="stylesheet">
 <link href="/node_modules/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.min.css" rel="stylesheet">
+<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <script src="/node_modules/jquery/dist/jquery.min.js"></script>
 
+<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
 <!-- FilePond library -->
-<script src="/node_modules/filepond/dist/filepond.min.js"></script>
+<script src="/node_modules/filepond/dist/filepond.js"></script>
 <!-- FilePond jQuery adapter -->
 <script src="/node_modules/jquery-filepond/filepond.jquery.js"></script>
 
@@ -21,31 +24,41 @@
 </head>
 <body>
 
-	<input type="file" 
-	    class="filepond"
-	    name="myPond" 
-	    multiple 
-	    data-accepted-file-types="audio/*"
-	    data-label-idle="파일을 이곳으로 끌어오거나 클릭하세요."
-	    data-style-button-remove-item-position="left"
-	    data-style-button-process-item-position="right"
-	    data-style-load-indicator-position="right"
-	    data-style-progress-indicator-position="right"
-	    data-allow-reorder="true"
-	    data-max-file-size="100MB"
-	    data-max-files="3">
+	<header th:replace="layout/header :: header"></header>
+	
+	<div class="container my-5 py-5">
+	
+		<input type="file" 
+		    class="filepond"
+		    name="myPond" 
+		    data-accepted-file-types="audio/*"
+		    data-label-idle="파일을 이곳으로 끌어오거나 클릭하세요."
+		    data-style-button-remove-item-position="left"
+		    data-style-button-process-item-position="right"
+		    data-style-load-indicator-position="right"
+		    data-style-progress-indicator-position="right"
+		    data-allow-reorder="true"
+		    data-max-file-size="100MB"
+		    data-max-files="1">
 	    
+	    
+	    <div class="my-3 clearFix gap-2">
+			<button type="button" class="btn btn-secondary float-end" id="btn-next">다음</button>
+		</div>
+	
+	
+	</div>
+
+	
     <script>
 	  $(function(){
 	  
 		$.fn.filepond.registerPlugin(FilePondPluginMediaPreview, FilePondPluginFileValidateType); 
 		$.fn.filepond.setOptions({
 	    	server: {
-	    		url : 'http://localhost:8080/upload',
-	    		onload : (response) => {
-    				alert(response.SUCCESS);
-    			}
-	    	}    	
+	    		url : '/upload',
+	    	},
+	    	instantUpload : false
 	    });
 		  
 	    // Turn input element into a pond
@@ -59,19 +72,13 @@
 	    $('.filepond').on('FilePond:addfile', function(e) {
 	        console.log('file added event', e);
 	    });
-	  
-
 	    
-	    /*
-	    // Manually add a file using the addfile method
-	    $('.filepond').first().filepond('addFile', 'upload_music.html').then(function(file){
-	      console.log('file added', file);
+	    $('#btn-next').on('click', function() {
+	    	location.href="/upload/desc";
 	    });
-	    */
 	  
 	  });
 	</script>
-	    
 
 </body>
 </html>

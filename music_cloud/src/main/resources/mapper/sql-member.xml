@@ -27,13 +27,24 @@
 	
 	<select id="userInfoByPk" parameterType="int" resultType="com.bitc.cjh.dto.UserDto">
 		<![CDATA[ 
-	SELECT
-		*
-	FROM
-		users
-	WHERE
-		user_pk = #{userPk}
-	]]>
+			SELECT
+				*
+			FROM
+				users
+			WHERE
+				user_pk = #{userPk}
+		]]>
+	</select>
+	
+	<select id="selectMember" parameterType="String" resultType="com.bitc.cjh.dto.UserDto">
+		<![CDATA[ 
+			SELECT 
+				user_pk, user_email, user_name, user_phone, admin_yn
+			FROM
+				users
+			WHERE
+				user_email = #{userEmail}
+		]]>
 	</select>
 	
 	

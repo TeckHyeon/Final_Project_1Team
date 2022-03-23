@@ -1,6 +1,5 @@
 package com.bitc.cjh.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bitc.cjh.common.AudioTagger;
+import com.bitc.cjh.dto.FileDto;
 import com.bitc.cjh.dto.MusicDto;
 import com.bitc.cjh.dto.MusicReplyDto;
+import com.bitc.cjh.dto.ReplyDto;
 import com.bitc.cjh.dto.UserDto;
 import com.bitc.cjh.dto.UserPlaylistDto;
 import com.bitc.cjh.service.IOService;
@@ -39,6 +41,9 @@ import com.bitc.cjh.service.MusicCloudService;
 @Controller
 public class MainController {
 	
+	public static final String AUDIO_PATH = "C:\\Users\\CJH\\git\\Final_Project_1Team\\music_cloud\\audio";
+	public static final int BYTE_RANGE = 128;
+		
 	@Autowired
 	private IOService ioService;
 	
@@ -64,11 +69,63 @@ public class MainController {
 
 		return "/layout/header";
 	}
+	
+	@RequestMapping(value = "/footer", method = RequestMethod.GET)
+	@ResponseBody
+	public Object currentPlayLits(@RequestParam("musicPk") int musicPk) throws Exception {
+		List<MusicDto> musicInfo = mcService.checkMusicInfo(musicPk);
+		List<FileDto> fileInfo = mcService.checkFileInfo(musicPk);
+		Stream<MusicDto> musicInfoStream = musicInfo.stream();
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		musicInfoStream.forEach(s -> {
+			try {
+				String title = s.getMusicTitle();
+				String artist = s.getMusicArtist();
 
+				retVal.put("title", title);
+				retVal.put("artist", artist);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		});
+		Stream<FileDto> fileInfoStream = fileInfo.stream();
+		fileInfoStream.forEach(f -> {
+			try {
+				String src = f.getStoredFilePath();
+				retVal.put("src", src);
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		});
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/footer", method = RequestMethod.POST)
+	@ResponseBody
+	public Object currentPlayList(@RequestParam("musicPk") int musicPk, HttpServletRequest request,
+			@RequestParam("title") String title, @RequestParam("artist") String artist, @RequestParam("src") String src)
+			throws Exception {
+
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("title", title);
+		retVal.put("artist", artist);
+		retVal.put("src", src);
+
+
+		return retVal;
+	}
+	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String mainPage(UserDto user, Model model) throws Exception {
+	public ModelAndView mainPage(UserDto user, Model model) throws Exception {
+		ModelAndView mv = new ModelAndView("main");
+		List<MusicDto> musicList = mcService.importMusicInfo();
 
-		return "main";
+		List<MusicDto> maxLikeList = mcService.musicInfoByCategory();
+		mv.addObject("music", musicList);
+		mv.addObject("like", maxLikeList);
+		return mv;
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -77,27 +134,11 @@ public class MainController {
 		List<MusicDto> musicList = mcService.searchMusic(keyword);
 		mv.addObject("keyword", keyword);
 		mv.addObject("search", musicList);
-		
-		Stream<MusicDto> musicListStream = musicList.stream();
-		musicListStream.forEach(s -> {
-			int userPk = s.getUserPk();
-			List<UserDto> users = new ArrayList<UserDto>();
-			try {
-				users = memberService.userInfoByPk(userPk);
-				mv.addObject("users",users);
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		});
 		return mv;
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String searchPage(UserDto user, @RequestParam("keyword") String keyword, Model model)
-			throws Exception {
+	public String searchPage(UserDto user, @RequestParam("keyword") String keyword, Model model) throws Exception {
 		List<MusicDto> musicList = mcService.searchMusic(keyword);
 
 		model.addAttribute("musicList", musicList);
@@ -105,8 +146,11 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String detailPage() throws Exception {
-		return "detail";
+	public ModelAndView detailPage(@RequestParam("musicPk") int musicPk) throws Exception {
+		ModelAndView mv = new ModelAndView("/detail");
+		MusicDto MusicDetail = mcService.viewDetailPage(musicPk);
+		mv.addObject("MusicDetail", MusicDetail);
+		return mv;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -129,16 +173,32 @@ public class MainController {
 		return str;
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public Object regiserCheck(UserDto memberDto) throws Exception {
+
+		int result = memberService.emailCheck(memberDto.getUserEmail());
+
+		HashMap<String, Integer> datas = new HashMap<>();
+		datas.put("count", result);
+
+		return datas;
+	}
+
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
 	public String loginCheck(UserDto user, HttpServletRequest request) throws Exception {
 
 		int count = memberService.selectMemberInfoYn(user.getUserEmail(), user.getUserPw());
 
 		if (count == 1) {
+			
+			UserDto userInfo = memberService.selectMember(user.getUserEmail());
+			
 			HttpSession session = request.getSession();
-			session.setAttribute("userEmail", user.getUserEmail());
-			session.setAttribute("userName", user.getUserName());
-			session.setAttribute("userPk", user.getUserPk());
+			
+			session.setAttribute("userEmail", userInfo.getUserEmail());
+			session.setAttribute("userName", userInfo.getUserName());
+			session.setAttribute("userPk", userInfo.getUserPk());
 			session.setMaxInactiveInterval(1800);
 
 		} else {
@@ -226,19 +286,6 @@ public class MainController {
 		memberService.register(memberDto);
 		return "redirect:/";
 	}
-	
-	// 이메일 중복 확인
-	@ResponseBody
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public Object regiserCheck(UserDto memberDto) throws Exception {
-
-		int result = memberService.emailCheck(memberDto.getUserEmail());
-
-		HashMap<String, Integer> data = new HashMap<>();
-		data.put("count", result);
-		
-		return data;
-	}
 
 
 	// 회원 정보 페이지
@@ -308,16 +355,24 @@ public class MainController {
 	/* ----- 업로드(최정환) ----- */
 
 	@RequestMapping(value="/upload")
-	public ModelAndView openIndex() throws Exception{
-		ModelAndView mv = new ModelAndView("/file_IO/upload_music");
+	public ModelAndView openUpload() throws Exception{
+		ModelAndView mv = new ModelAndView("/file/upload_music");
 		
 		return mv;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
-	public Map<String, Object> insertProductRegistration(MultipartHttpServletRequest multiFiles) throws Exception {		
+	public Map<String, Object> insertAudio(MultipartHttpServletRequest multiFiles, HttpServletRequest request) throws Exception {		
 		
-		ioService.insertAudio(multiFiles);
+		HttpSession session = request.getSession();
+		
+		int userPk = (int)session.getAttribute("userPk");
+		
+		FileDto music = ioService.insertAudio(multiFiles, userPk);
+		
+		session.setAttribute("tag", music.getTag());
+		session.setAttribute("path", music.getStoredThumbPath());
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("SUCCESS", true);
@@ -325,34 +380,194 @@ public class MainController {
 		return result;
 	}
 	
+	@RequestMapping(value="/upload/desc", method=RequestMethod.GET)
+	public ModelAndView openUploadDesc(HttpServletRequest request) throws Exception {		
+		
+		HttpSession session = request.getSession();
+		
+		AudioTagger tag = (AudioTagger)session.getAttribute("tag");
+		String thumb_path = (String)session.getAttribute("path");
+		
+		session.removeAttribute("tag");
+		session.removeAttribute("path");
+		
+		MusicDto music = new MusicDto();
+		
+		music.setMusicTitle(tag.getTitle());
+		music.setMusicArtist(tag.getArtist());
+		music.setMusicAlbum(tag.getAlbum());
+		music.setGenre(tag.getGenre());
+		
+		ModelAndView mv = new ModelAndView("file/music_desc");
+		
+		mv.addObject("tag", music);
+		mv.addObject("thumb_path", thumb_path);
+		
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/upload/desc", method=RequestMethod.POST)
+	public String insertMusicDesc(MusicDto music, HttpServletRequest request) throws Exception {
+		
+		System.out.println(music.toString());
+		
+		HttpSession session = request.getSession();
+	
+		int userPk = (Integer)session.getAttribute("userPk");
+		
+		music.setUserPk(userPk);
+		
+		ioService.insertMusicDesc(music);
+		
+	
+		return "redirect:/main";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/reply", method=RequestMethod.POST)
+	public Map<String, Object> addReply(ReplyDto reply, HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+	
+		int userPk = (Integer)session.getAttribute("userPk");
+		String userName = (String)session.getAttribute("userName");
+		
+		reply.setUserPk(userPk);
+		reply.setUserName(userName);
+		
+		mcService.insertMusicReply(reply);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("result", "success");
+		result.put("userName", userName);
+		result.put("reply", reply.getReply());
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/reply/{musicPk}", method=RequestMethod.POST)
+	public List<ReplyDto> selectMusicReplyList(@PathVariable("musicPk") String musicPk) throws Exception {
+		
+		int pk = Integer.parseInt(musicPk);
+		
+		List<ReplyDto> list = mcService.selectMusicReplyList(pk);
+		
+		
+		return list;
+	}
 	
 	
+	
+	
+	/*
 	@RequestMapping(value="/audio")
 	public ModelAndView openMusicDetail() throws Exception{
 		ModelAndView mv = new ModelAndView("/detail");
 		return mv;
 	}
 	
-	@RequestMapping(value="/audio/1")
-	public String musicSrc() throws Exception{
+	@RequestMapping(value="/audio/{fileName}", method=RequestMethod.GET)
+	public Mono<ResponseEntity<byte[]>> streamAudio(
+			@RequestHeader(value = "Range", required = false) String httpRangeList,
+            @PathVariable("fileName") String fileName) {
 		
-		return "C:/Users/CJH/git/Final_Project_1Team/music_cloud/audio/20220317/438724586989200.flac";
+		return Mono.just(getContent(AUDIO_PATH, fileName, httpRangeList, "audio"));
 	}
 	
 	
-	/*
-	@RequestMapping(value="/admin/product/registration", method=RequestMethod.POST)
-	public Map<String, Object> insertProductRegistration(
-			@RequestPart(value="optionKey") List<Map<String, Object>> optionList,
-			@RequestPart(value="productKey") Map<String, Object> productItem,
-			@RequestPart(value="file", required=false) List<MultipartFile> multiFiles) throws Exception {		
+	private ResponseEntity<byte[]> getContent(String location, String fileName, String range, String contentTypePrefix) {
 		
-		productService.insertProductItem(optionList, productItem, multiFiles);
+		long rangeStart = 0;
+		long rangeEnd;
+		byte[] data;
+		Long fileSize;
+		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
 		
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("SUCCESS", true);
+		System.out.println(System.getProperty("user.dir"));
 		
-		return result;
+		try {
+			fileSize = Optional.ofNullable(fileName)
+					  .map(file -> Paths.get(location, file))
+					  .map(this :: sizeFromFile)
+					  .orElse(0L);
+			if (range == null) {
+				return ResponseEntity.status(HttpStatus.OK)
+					  .header("Content-Type", contentTypePrefix+"/"+fileType)
+					  .header("Content-Length", String.valueOf(fileSize))
+					  .body(readByteRange(location, fileName, rangeStart, fileSize - 1));
+			}
+			
+			String[] ranges = range.split("-");
+			rangeStart = Long.parseLong(ranges[0].substring(6));
+			
+			if (ranges.length > 1) {
+				rangeEnd = Long.parseLong(ranges[1]);
+			} else {
+				rangeEnd = fileSize - 1;
+			}
+			
+			if (fileSize < rangeEnd) {
+				rangeEnd = fileSize - 1;
+			}
+			
+			data = readByteRange(location, fileName, rangeStart, rangeEnd);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		String contentLength = String.valueOf((rangeEnd - rangeStart) + 1);
+		
+		return ResponseEntity.status(HttpStatus.OK)
+			  .header("Content-Type", contentTypePrefix+"/"+fileType)
+			  .header("Content-Length", contentLength)
+			  .header("Content-Range", "bytes" + " " + rangeStart + "-" + rangeEnd + "/" + fileSize)
+			  .body(data);
+		
+	}
+	
+	public byte[] readByteRange(String location, String fileName, long start, long end) throws IOException {
+		Path path = Paths.get(location, fileName);
+		
+		try (InputStream inputStream = (Files.newInputStream(path));
+			ByteArrayOutputStream bufferedOutputStream = new ByteArrayOutputStream()) {
+			
+				byte[] data = new byte[BYTE_RANGE];
+			    int nRead;
+			    
+			    while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+			       bufferedOutputStream.write(data, 0, nRead);
+			    }
+			    
+			    bufferedOutputStream.flush();
+			    
+			    byte[] result = new byte[(int) (end - start) + 1];
+			    
+			    System.arraycopy(bufferedOutputStream.toByteArray(), (int) start, result, 0, result.length);
+			    
+			    return result;
+			}
+				
+	}
+	
+	
+	private String getFilePath(String location) {
+	    URL url = this.getClass().getResource(location);
+	    return new File(url.getFile()).getAbsolutePath();
+	}
+	
+	
+	
+	private Long sizeFromFile(Path path) {
+		try {
+		   return Files.size(path);
+		} catch (IOException ex) {
+		   ex.printStackTrace();
+		}
+		return 0L;
 	}
 	*/
 }
