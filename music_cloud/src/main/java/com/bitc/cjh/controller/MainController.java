@@ -76,8 +76,20 @@ public class MainController {
 		return "/layout/header";
 	}
 	@RequestMapping(value = "/footer", method = RequestMethod.GET)
-	public String footer() throws Exception {
-		return "/layout/footer";
+	public ModelAndView footer(@RequestParam("musicPk") int musicPk) throws Exception {
+		ModelAndView mv = new ModelAndView("/layout/footer");
+		List<MusicDto> musicInfo = mcService.checkMusicInfo(musicPk);
+		System.out.println(musicPk);
+		mv.addObject("musicInfo", musicInfo);
+		return mv;
+	}
+	@RequestMapping(value = "/footer", method = RequestMethod.POST)
+	public String currentPlayList(@RequestParam("musicPk") int musicPk) throws Exception {
+		ModelAndView mv = new ModelAndView("/layout/footer");
+		List<MusicDto> musicInfo = mcService.checkMusicInfo(musicPk);
+		System.out.println(musicInfo);
+		mv.addObject("musicInfo", musicInfo);
+		return "footer :: #resultDiv";
 	}
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView mainPage(UserDto user, Model model) throws Exception {
@@ -133,6 +145,13 @@ public class MainController {
 			str = "NO";
 		}
 		return str;
+	}
+	@RequestMapping(value = "/addPlayList", method = RequestMethod.POST)
+	public @ResponseBody ModelAndView addPlayList(@RequestParam("musicPk") int musicPk) throws Exception {
+		ModelAndView mv = new ModelAndView("/layout/footer");
+		List<MusicDto> musicInfo = mcService.checkMusicInfo(musicPk);
+		mv.addObject("musicInfo", musicInfo);
+		return mv;
 	}
 
 	@ResponseBody

@@ -6,11 +6,23 @@
 	<select id="searchMusic" parameterType="String" resultType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[ 
 			SELECT
-				music_pk, music_category_pk, user_pk, artist_name, music_title, music_desc, like_count, privacy, created_dt
+				music_pk, music_category_pk, user_pk, music_artist, music_title, music_desc, like_count, privacy, created_dt
 			FROM
 				music
 			WHERE
-				music_title like CONCAT('%',#{keyword},'%')
+				music_title like CONCAT('%',#{keyword},'%') OR music_artist like CONCAT('%',#{keyword},'%')
+			AND
+				privacy = 'Y'
+		]]>
+	</select>
+	<select id="checkMusicInfo" parameterType="int" resultType="com.bitc.cjh.dto.MusicDto">
+		<![CDATA[ 
+			SELECT
+				music_pk, music_category_pk, user_pk, music_artist, music_title, music_desc, like_count, privacy, created_dt
+			FROM
+				music
+			WHERE
+				music_pk = #{musicPk}
 			AND
 				privacy = 'Y'
 		]]>
@@ -19,7 +31,7 @@
 	<select id="importMusicInfo" resultType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[
 			SELECT
-				music_pk, music_category_pk, user_pk, music_title, artist_name, music_desc, like_count, privacy, created_dt
+				music_pk, music_category_pk, user_pk, music_title, music_artist, music_desc, like_count, privacy, created_dt
 			FROM
 				music
 			WHERE
@@ -32,9 +44,9 @@
 	<select id="musicInfoByCategory" resultType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[
 			SELECT
-			t1.music_pk, t1.music_category_pk, t1.user_pk, t1.music_title, t1.artist_name, t1.music_desc, t1.like_count, t1.privacy, t1.created_dt 
+			t1.music_pk, t1.music_category_pk, t1.user_pk, t1.music_title, t1.music_artist, t1.music_desc, t1.like_count, t1.privacy, t1.created_dt 
 			FROM 
-			music as t1, (SELECT music_pk, music_category_pk, user_pk, music_title, artist_name, music_desc, like_count, privacy, created_dt, max(like_count) as max_like FROM music group by music_category_pk) as t2
+			music as t1, (SELECT music_pk, music_category_pk, user_pk, music_title, music_artist, music_desc, like_count, privacy, created_dt, max(like_count) as max_like FROM music group by music_category_pk) as t2
 			WHERE
 			t1.like_count = t2.max_like and t1.music_category_pk = t2.music_category_pk;
 		]]>
@@ -59,7 +71,7 @@
 	<select id="viewDetailPage" parameterType="int" resultType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[
 			SELECT
-				music_pk, music_category_pk, artist_name, user_pk, music_title, music_desc, like_count, privacy, created_dt
+				music_pk, music_category_pk, music_artist, user_pk, music_title, music_desc, like_count, privacy, created_dt
 			FROM
 				music
 			WHERE

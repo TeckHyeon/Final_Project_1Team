@@ -32,7 +32,11 @@
 					artist="JAM Studio">Lovely Day</li>
 			</ul>
 		</div>
-
+		<div th:if="${#lists.size(musicInfo)} > 0"
+			th:each="item : ${musicInfo}" id="resultDiv">
+			<span class="row fs-5 fw-light mx-2" style="margin-top: -0.3em;"
+				th:text="${item.musicTitle}"></span>
+		</div>
 		<div class="playerbar">
 			<div class="playlistIcon">
 				<span class="material-icons" style="color: white">queue_music</span>

@@ -12,7 +12,7 @@ public class MusicDto {
 	private int musicCategoryPk;
 	private int userPk;
 	private String musicTitle;
-	private String artistName;
+	private String musicArtist;
 	private String musicDesc;
 	private int likeCount;
 	private char privacy;

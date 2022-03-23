@@ -3,6 +3,7 @@ package com.bitc.cjh.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.bitc.cjh.dto.MusicDto;
 import com.bitc.cjh.dto.UserDto;
 
 public interface MemberService {
@@ -38,7 +39,5 @@ public interface MemberService {
 	void updateTempPw(UserDto memberDto) throws Exception;
 
 	Object findpwProcess(HashMap<String, Object> hashMap) throws Exception;
-
-
 	
 }

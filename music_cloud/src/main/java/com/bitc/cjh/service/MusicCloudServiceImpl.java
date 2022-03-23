@@ -127,6 +127,12 @@ public class MusicCloudServiceImpl implements MusicCloudService {
 		return mcMapper.selectUserUpload(userPk);
 	}
 
+	@Override
+	public List<MusicDto> checkMusicInfo(int musicPk) throws Exception {
+		List<MusicDto> musicInfo = mcMapper.checkMusicInfo(musicPk);
+		return musicInfo;
+	}
+
 	
 
 

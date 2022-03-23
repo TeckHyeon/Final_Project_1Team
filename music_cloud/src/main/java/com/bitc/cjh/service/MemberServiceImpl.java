@@ -7,6 +7,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bitc.cjh.dto.MusicDto;
 import com.bitc.cjh.dto.UserDto;
 import com.bitc.cjh.mapper.MemberMapper;
 

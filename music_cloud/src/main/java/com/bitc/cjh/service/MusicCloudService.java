@@ -30,4 +30,6 @@ public interface MusicCloudService {
 
 	MusicDto viewDetailPage(int musicPk) throws Exception;
 
+	List<MusicDto> checkMusicInfo(int musicPk) throws Exception;
+
 }
