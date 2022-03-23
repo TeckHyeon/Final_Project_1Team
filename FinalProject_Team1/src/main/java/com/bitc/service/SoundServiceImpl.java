@@ -33,5 +33,10 @@ public class SoundServiceImpl implements SoundService {
 	public List<SoundDto> selectUserUpload(int userPk) throws Exception {
 		return soundMapper.selectUserUpload(userPk);
 	}
+	
+	@Override
+	public List<SoundDto> selectUserPlaylistDetail(int userPlaylistPk) throws Exception {
+		return soundMapper.selectUserPlaylistDetail(userPlaylistPk);
+	}
 
 }

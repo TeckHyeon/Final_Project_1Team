@@ -20,5 +20,6 @@ public class SoundDto {
 	private String musicTitle;
 	private String likeCount;
 	private char privacy;
+	private int userplaylistDetailPk;
 
 }

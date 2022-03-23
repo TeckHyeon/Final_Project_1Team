@@ -37,10 +37,9 @@ public class SoundController {
 	public ModelAndView playList(@RequestParam("userPlaylistPk") int userPlaylistPk) throws Exception {
 		ModelAndView mv = new ModelAndView("/sound/playList");
 		
-		List<SoundDto> userList = soundService.selectUserProfile();
-		List<SoundDto> upload = soundService.selectUserUpload(userPlaylistPk);
-		mv.addObject("userList", userList);
-		mv.addObject("upload", upload);
+		List<SoundDto> pld = soundService.selectUserPlaylistDetail(userPlaylistPk);
+		
+		mv.addObject("pld", pld);
 
 		return mv;
 	}

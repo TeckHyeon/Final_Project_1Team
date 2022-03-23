@@ -58,5 +58,22 @@
 				user_playlist_pk DESC
 		]]>
 	</select>
+	
+	<select id="selectUserPlaylistDetail"
+		resultType="com.bitc.dto.SoundDto">
+		<![CDATA[
+			SELECT
+				d.userplaylist_detail_pk, d.user_playlist_pk, m.music_pk,
+				m.music_category_pk, m.user_pk, m.music_title, m.like_count
+			FROM
+				userplaylist_detail d, music m, userplaylist u
+			WHERE
+			    d.music_pk = m.music_pk
+			AND
+				d.user_playlist_pk = #{user_playlist_pk}
+			ORDER BY
+				d.userplaylist_detail_pk DESC
+		]]>
+	</select>
 
 </mapper>
