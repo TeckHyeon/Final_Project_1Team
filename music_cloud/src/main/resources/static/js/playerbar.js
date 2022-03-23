@@ -140,6 +140,7 @@ $(document).ready(function() {
 
 	$('.volumeIcon').click(function(e) {
 		e.preventDefault();
+		console.log(volume.slider);
 		$('.volume').toggleClass('show');
 	});
 

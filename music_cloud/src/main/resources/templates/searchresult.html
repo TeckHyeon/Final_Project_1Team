@@ -154,20 +154,37 @@ a {
 	$(document).ready(function() {
 		const play_list_btn = {};
 		const musicPk = {};
+		const title = {};
+		const artist = {};
 		const filePath = {};
 		const listsSize = $("#listsSize").val();
 		for (let i = 1; i <= listsSize; i++) {
 			play_list_btn[i] = document.getElementById('play_list_btn' + i);
 			musicPk[i] = document.getElementById('musicPk' + i);
+			title[i] = document.getElementById('title' + i);
+			artist[i] = document.getElementById('artist' + i);
+			filePath[i] = document.getElementById('filePath' + i);
 			$(play_list_btn[i]).on('click', function() {
+				console.log(title[i].value);
 				$.ajax({
-					type : "post",
-					url : "footer",
+					type : "POST",
+					url : "/footer",
 					data : {
 						"musicPk" : musicPk[i].value,
+						"title" : title[i].value,
+						"artist" : artist[i].value,
+						"src" : filePath[i].value
 					},
-					success : function(fragment) {
-						 $("#resultDiv").replaceWith(fragment);
+					success : function(retVal) {
+						console.log(retVal.title);
+						console.log(retVal.artist);
+						console.log(retVal.src);
+						const textNode = document.createTextNode(retVal.title);
+						const li = document.createElement("li");
+						li.setAttribute('audioURL', retVal.src);
+						li.setAttribute('artist', retVal.artist);
+						li.appendChild(textNode);
+						document.getElementById('playlist').appendChild(li);
 					}
 				});
 			});
@@ -227,16 +244,26 @@ a {
 													<input type="hidden" th:value="${file.stored_file_path}"
 														id="filePath" th:attrappend="id=${itemStat.count}">
 												</div>
+												<input type="hidden" th:value="${item.musicTitle}"
+													id="title" th:attrappend="id=${itemStat.count}">
+												<input type="hidden" th:value="${item.musicArtist}"
+													id="artist" th:attrappend="id=${itemStat.count}">
+
 												<div class="d-flex flex-row">
 													<span class="row fs-5 fw-light mx-1"
-														style="margin-top: -0.3em;" th:text="${item.musicArtist}"></span>
-													- <span class="row fs-5 fw-light mx-2"
-														style="margin-top: -0.3em;" th:text="${item.musicTitle}"></span>
+														style="margin-top: -0.3em; width: auto;"
+														th:text="${item.musicArtist}"
+														th:value="${item.musicArtist}" id="musicArtist"
+														th:attrappend="id=${itemStat.count}"></span> - <span
+														class="row fs-5 fw-light mx-2" style="margin-top: -0.3em;"
+														th:text="${item.musicTitle}" th:value="${item.musicTitle}"
+														id="musicTitle" th:attrappend="id=${itemStat.count}"></span>
 												</div>
 
 												<input type="hidden" class="row fs-5 fw-light ms-1"
 													style="margin-top: -0.3em; color: black;"
-													th:value="${item.musicPk}" name="musicPk" id="musicPk" th:attrappend="id=${itemStat.count}">
+													th:value="${item.musicPk}" name="musicPk" id="musicPk"
+													th:attrappend="id=${itemStat.count}">
 
 											</div>
 										</div>

@@ -22,14 +22,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bitc.cjh.dto.FileDto;
 import com.bitc.cjh.dto.MusicDto;
 import com.bitc.cjh.dto.MusicReplyDto;
 import com.bitc.cjh.dto.UserDto;
@@ -75,22 +78,54 @@ public class MainController {
 
 		return "/layout/header";
 	}
+
 	@RequestMapping(value = "/footer", method = RequestMethod.GET)
-	public ModelAndView footer(@RequestParam("musicPk") int musicPk) throws Exception {
-		ModelAndView mv = new ModelAndView("/layout/footer");
+	@ResponseBody
+	public Object currentPlayLits(@RequestParam("musicPk") int musicPk) throws Exception {
 		List<MusicDto> musicInfo = mcService.checkMusicInfo(musicPk);
-		System.out.println(musicPk);
-		mv.addObject("musicInfo", musicInfo);
-		return mv;
+		List<FileDto> fileInfo = mcService.checkFileInfo(musicPk);
+		Stream<MusicDto> musicInfoStream = musicInfo.stream();
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		musicInfoStream.forEach(s -> {
+			try {
+				String title = s.getMusicTitle();
+				String artist = s.getMusicArtist();
+
+				retVal.put("title", title);
+				retVal.put("artist", artist);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		});
+		Stream<FileDto> fileInfoStream = fileInfo.stream();
+		fileInfoStream.forEach(f -> {
+			try {
+				String src = f.getStoredFilePath();
+				retVal.put("src", src);
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		});
+		return retVal;
 	}
+
 	@RequestMapping(value = "/footer", method = RequestMethod.POST)
-	public String currentPlayList(@RequestParam("musicPk") int musicPk) throws Exception {
-		ModelAndView mv = new ModelAndView("/layout/footer");
-		List<MusicDto> musicInfo = mcService.checkMusicInfo(musicPk);
-		System.out.println(musicInfo);
-		mv.addObject("musicInfo", musicInfo);
-		return "footer :: #resultDiv";
+	@ResponseBody
+	public Object currentPlayList(@RequestParam("musicPk") int musicPk, HttpServletRequest request,
+			@RequestParam("title") String title, @RequestParam("artist") String artist, @RequestParam("src") String src)
+			throws Exception {
+
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("title", title);
+		retVal.put("artist", artist);
+		retVal.put("src", src);
+
+
+		return retVal;
 	}
+
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView mainPage(UserDto user, Model model) throws Exception {
 		ModelAndView mv = new ModelAndView("main");
@@ -146,6 +181,7 @@ public class MainController {
 		}
 		return str;
 	}
+
 	@RequestMapping(value = "/addPlayList", method = RequestMethod.POST)
 	public @ResponseBody ModelAndView addPlayList(@RequestParam("musicPk") int musicPk) throws Exception {
 		ModelAndView mv = new ModelAndView("/layout/footer");
@@ -177,7 +213,7 @@ public class MainController {
 			session.setAttribute("userName", user.getUserName());
 			session.setAttribute("userPk", user.getUserPk());
 			session.setMaxInactiveInterval(1800);
-
+			
 		} else {
 
 			System.out.println("실패");
@@ -267,7 +303,7 @@ public class MainController {
 	public ModelAndView memberInfo(HttpServletRequest request) throws Exception {
 
 		HttpSession session = request.getSession();
-
+		
 		int userPk = (int) session.getAttribute("userPk");
 
 		UserDto data = memberService.selectMemberInfo(userPk);

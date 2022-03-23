@@ -40,4 +40,8 @@ public interface MusicCloudMapper {
 
 	List<MusicDto> checkMusicInfo(int musicPk) throws Exception;
 
+	List<FileDto> checkFileInfo(int musicPk) throws Exception;
+
+	
+
 }

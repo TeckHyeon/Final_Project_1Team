@@ -16,27 +16,14 @@
 </head>
 <body>
 	<footer class="footer">
+			<div class="volume" style="z-index: 3; margin-top: -5rem;"></div>	
 		<div>
 			<ul class="playlist" id="playlist">
-				<li
-					audioURL="http://picdn.net/shutterstock/audio/397361/preview/preview.mp3"
-					artist="JAM Studio">Work In Order</li>
-				<li
-					audioURL="http://picdn.net/shutterstock/audio/429215/preview/preview.mp3"
-					artist="Ulas Pakkan">Technology</li>
-				<li
-					audioURL="http://picdn.net/shutterstock/audio/397292/preview/preview.mp3"
-					artist="JAM Studio">Gateway</li>
-				<li
-					audioURL="http://picdn.net/shutterstock/audio/423269/preview/preview.mp3"
-					artist="JAM Studio">Lovely Day</li>
+			
 			</ul>
+
 		</div>
-		<div th:if="${#lists.size(musicInfo)} > 0"
-			th:each="item : ${musicInfo}" id="resultDiv">
-			<span class="row fs-5 fw-light mx-2" style="margin-top: -0.3em;"
-				th:text="${item.musicTitle}"></span>
-		</div>
+
 		<div class="playerbar">
 			<div class="playlistIcon">
 				<span class="material-icons" style="color: white">queue_music</span>
@@ -67,7 +54,7 @@
 			<div class="volumeIcon">
 				<span class="material-icons" style="color: white"> volume_up
 				</span>
-				<div class="volume"></div>
+				
 			</div>
 
 			<div class="tracker">

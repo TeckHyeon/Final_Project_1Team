@@ -2,6 +2,7 @@ package com.bitc.cjh.service;
 
 import java.util.List;
 
+import com.bitc.cjh.dto.FileDto;
 import com.bitc.cjh.dto.MusicDto;
 import com.bitc.cjh.dto.MusicReplyDto;
 import com.bitc.cjh.dto.UserDto;
@@ -31,5 +32,7 @@ public interface MusicCloudService {
 	MusicDto viewDetailPage(int musicPk) throws Exception;
 
 	List<MusicDto> checkMusicInfo(int musicPk) throws Exception;
+
+	List<FileDto> checkFileInfo(int musicPk) throws Exception;
 
 }

@@ -19,6 +19,33 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <link rel="stylesheet" href="css/main.css">
+<script>
+	$(document).ready(function() {
+		for (let i = 1; i <= 10; i++) {
+			musicPk[i] = document.getElementById('musicPk' + i);
+			$.ajax({
+				type : "POST",
+				url : "/footer",
+				data : {
+					"musicPk" : musicPk[i].value
+				},
+				success : function(retVal) {
+					console.log(retVal.title);
+					console.log(retVal.artist);
+					console.log(retVal.src);
+					const textNode = document.createTextNode(retVal.title);
+					const li = document.createElement("li");
+					li.setAttribute('audioURL', retVal.src);
+					li.setAttribute('artist', retVal.artist);
+					li.appendChild(textNode);
+					document.getElementById('playlist').appendChild(li);
+					location.replace("/main");
+				}
+			});
+		}
+
+	});
+</script>
 <style>
 .swiper-container {
 	margin: 0 auto;
@@ -98,6 +125,7 @@ a {
 	margin-bottom: 5rem;
 }
 </style>
+
 <script src="js/main_ajax.js"></script>
 <script src="js/login.js"></script>
 </head>
@@ -181,7 +209,10 @@ a {
 											th:text="${item.musicTitle}"
 											class="text-decoration-none row card-title fs-6 mt-2 ms-1"
 											style="margin-top: -0.5rem; font-size: 13px; color: black;">노래
-											제목</a>
+											제목</a> <input type="hidden" class="row fs-5 fw-light ms-1"
+											style="margin-top: -0.3em; color: black;"
+											th:value="${item.musicPk}" name="musicPk" id="musicPk"
+											th:attrappend="id=${itemStat.count}">
 									</div>
 									<div class="d-flex flex-row justify-content-between ms-1">
 										<span class="fw-light mt-1" style="font-size: 11px;"

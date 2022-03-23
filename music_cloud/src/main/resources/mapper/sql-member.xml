@@ -25,6 +25,7 @@
 		]]>
 	</select>
 
+
 	<select id="userInfoByPk" parameterType="int" resultType="com.bitc.cjh.dto.UserDto">
 		<![CDATA[ 
 	SELECT

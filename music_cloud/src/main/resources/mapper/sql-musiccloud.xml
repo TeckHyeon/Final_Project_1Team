@@ -27,7 +27,16 @@
 				privacy = 'Y'
 		]]>
 	</select>
-
+	<select id="checkFileInfo" parameterType="int" resultType="com.bitc.cjh.dto.FileDto">
+		<![CDATA[
+		SELECT
+			*
+		FROM
+			music_file 
+		WHERE
+			idx = #{musicPk}
+		]]>
+	</select>
 	<select id="importMusicInfo" resultType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[
 			SELECT
