@@ -196,7 +196,6 @@ public class MainController {
 			
 			HttpSession session = request.getSession();
 			
-			
 			session.setAttribute("userEmail", userInfo.getUserEmail());
 			session.setAttribute("userName", userInfo.getUserName());
 			session.setAttribute("userPk", userInfo.getUserPk());
@@ -261,7 +260,7 @@ public class MainController {
 		return mv;
 	}
 
-	@RequestMapping("/profile")
+	@RequestMapping("/profile{userPk}")
 	public ModelAndView userProfile(@RequestParam("userPk") int userPk) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/member/userprofile");
@@ -346,6 +345,7 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("/login/myPage");
 		
 		List<MusicReplyDto> replyData = mcService.reply(userPk); 
+		mv.addObject("replyData", replyData);
 		return mv;
 	}
 	

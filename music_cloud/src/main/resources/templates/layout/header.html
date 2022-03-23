@@ -30,6 +30,7 @@ a:hover {
 </head>
 <body>
 	<header>
+
 		<nav class="navbar navbar-expand-lg navbar-dark text-white"
 			style="background-color: #333333;">
 			<div class="container">
@@ -67,10 +68,12 @@ a:hover {
 							style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">로그인</a>
 							<div class="modal fade" id="openpopup" aria-hidden="true"
 								tabindex="-1">
+
 								<div class="modal-dialog modal-dialog-centered">
 									<div class="modal-content" style="height: 513px; width: 413px">
 										<div class="modal-header">
 											<h5 class="modal-title text-dark">Log in</h5>
+
 											<button type="button" class="btn-close"
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
@@ -82,29 +85,31 @@ a:hover {
 										<div style="display: none;" id="invalidId">
 											<p class="text-danger text-center fw-bold">이메일과 비밀번호를
 												확인해주세요</p>
+
 										</div>
 									</div>
 								</div>
 
 							</div>
-							<div class="modal fade" id="openpopup2" aria-hidden="true"
-								tabindex="-1">
+
+							<div class="modal fade" id="openpopup2" aria-hidden="true" tabindex="-1">
+
 								<div class="modal-dialog modal-dialog-centered">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title text-dark">Sign in</h5>
-											<button type="button" class="btn-close"
-												data-bs-dismiss="modal" aria-label="Close"></button>
+
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
-										<th:block
-											th:replace="~{/member/signin :: setSignin(~{this::signin} )}"></th:block>
-										<a class="btn mx-auto mb-5" data-bs-target="#openpopup"
-											data-bs-toggle="modal"
-											style="background-color: #F5F7F9; width: 20em; border: 0.5px solid; border-color: rgba(0, 0, 0, 0.25);">취소</a>
+										<th:block th:replace="~{/signin :: setSignin(~{this::signin} )}"></th:block>
+										<a class="btn mx-auto mb-5" data-bs-target="#openpopup" data-bs-toggle="modal"
+											style="background-color: #F5F7F9; width: 20em; border: 0.5px solid; border-color: rgba(0, 0, 0, 0.25);"
+										>취소</a>
 
 									</div>
 								</div>
 							</div></li>
+
 						<li class="nav-item mx-3 my-auto"><a
 							class="nav-link text-white btn btn-sm" data-bs-toggle="modal"
 							role="button" href="#openpopup2"
@@ -162,6 +167,7 @@ a:hover {
 							class="nav-link btn btn-sm text-white" href="/logout"
 							role="button"
 							style="border-color: rgba(255, 255, 255, 0.25); width: 6em;">로그아웃</a></li>
+
 					</ul>
 				</div>
 			</div>

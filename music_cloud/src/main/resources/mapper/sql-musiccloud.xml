@@ -15,7 +15,7 @@
 				privacy = 'Y'
 		]]>
 	</select>
-	
+
 	<select id="checkMusicInfo" parameterType="int" resultType="com.bitc.cjh.dto.MusicDto">
 		<![CDATA[ 
 			SELECT
@@ -145,7 +145,7 @@
 			SELECT
 				user_pk, user_playlist_pk, user_playlist_name, playlist
 			FROM
-				userplaylist
+				user_playlist
 			WHERE
 				user_pk = #{user_pk}
 			ORDER BY

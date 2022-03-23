@@ -29,7 +29,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 				.excludePathPatterns("/detail").excludePathPatterns("upload/**").excludePathPatterns("/search")
 				.excludePathPatterns("/index");
 				*/
-			
 	}
 	
 	@Bean
