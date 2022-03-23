@@ -253,9 +253,8 @@ a {
 							<div th:if="${#lists.size(playList)} > 0"
 								th:each="composition : ${playList}">
 								<div class="player my-4 d-flex flex-row" id="player">
-									<img class="thumb ms-3 col-2"
-										src="image/playlist.png" id="thumb"
-										style="width: 9rem; height: 9rem;" />
+									<img class="thumb ms-3 col-2" src="image/playlist.png"
+										id="thumb" style="width: 9rem; height: 9rem;" />
 									<div class="info ms-3 col-10" style="margin-left: -1rem;">
 										<div class="detail">
 											<div>
@@ -265,7 +264,9 @@ a {
 															<span class="row text-muted fw-light ms-1 mt-1"
 																style="font-size: 15px" th:text="${user.userName}">작성자</span>
 														</div>
-														<a href="playlist.do?userPlaylistPk=" th:attrappend="href=${sound.userPlaylistPk}" th:text="${sound.userName}" class="row fs-2 fw-light ms-1"
+														<a href="playlist.do?userPlaylistPk="
+															th:attrappend="href=${composition.userPlaylistPk}"
+															class="row fs-2 fw-light ms-1"
 															style="margin-top: -0.3em;"
 															th:text="${composition.userPlaylistName}"></a>
 													</div>
@@ -288,6 +289,19 @@ a {
 	</main>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
