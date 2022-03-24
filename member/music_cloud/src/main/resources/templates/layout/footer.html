@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+</head>
+<body>
+	<footer class="footer">
+			<div class="volume" style="z-index: 3; margin-top: -5rem;"></div>	
+		<div>
+			<ul class="playlist" id="playlist">
+			<li
+					audioURL="http://picdn.net/shutterstock/audio/397361/preview/preview.mp3"
+					artist="JAM Studio">Work In Order</li>
+				<li
+					audioURL="http://picdn.net/shutterstock/audio/429215/preview/preview.mp3"
+					artist="Ulas Pakkan">Technology</li>
+				<li
+					audioURL="http://picdn.net/shutterstock/audio/397292/preview/preview.mp3"
+					artist="JAM Studio">Gateway</li>
+				<li
+					audioURL="http://picdn.net/shutterstock/audio/423269/preview/preview.mp3"
+					artist="JAM Studio">Lovely Day</li>
+			</ul>
+
+		</div>
+
+		<div class="playerbar">
+			<div class="playlistIcon">
+				<span class="material-icons" style="color: white">queue_music</span>
+			</div>
+			<div class="clearfix"></div>
+			<div class="trackDetails ">
+				<span class="artist"></span> <span class="splitTxt"> - </span> <span
+					class="bartitle"></span>
+			</div>
+
+			<div class="controls">
+				<div class="rew">
+					<span class="material-icons" style="color: white">
+						skip_previous </span>
+				</div>
+				<div class="play">
+					<span class="material-icons" style="color: white">
+						play_arrow </span>
+				</div>
+				<div class="pause">
+					<span class="material-icons" style="color: white"> pause </span>
+				</div>
+
+				<div class="fwd">
+					<span class="material-icons" style="color: white">skip_next</span>
+				</div>
+			</div>
+			<div class="volumeIcon">
+				<span class="material-icons" style="color: white"> volume_up
+				</span>
+				
+			</div>
+
+			<div class="tracker">
+				<div class="slider"></div>
+			</div>
+		</div>
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script src="/js/playerbar.js">
+			
+		</script>
+	</footer>
+</body>
+</html>
